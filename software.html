@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
+<meta name="keywords" content="Zehua Pei, CUHK-CSE" />
+<meta name="description" content="Zehua Pei's Homepage, CUHK-CSE" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="shortcut icon" href="cuhk_logo.png" />
+<link rel="stylesheet" href="css/jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="css/jemdoc2.css" type="text/css" />
+<link rel="stylesheet" href="css/myMiddle.css" type="text/css" />
+<script src="profile-links.js" type="text/javascript"></script>
+<title>Zehua Pei - Software</title>
+</head>
+<body>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div class="menu-category">Zehua Pei</div>
+<div class="menu-item"><a href="index.html">Home</a></div>
+<div class="menu-item"><a href="publications.html">Publications</a></div>
+<div class="menu-item"><a href="software.html" class="current">Software</a></div>
+<div class="menu-category">Profiles</div>
+<div class="menu-item"><a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google&nbsp;Scholar</a></div>
+<div class="menu-item"><a href="https://github.com/JarvisPei">GitHub</a></div>
+<div class="menu-item"><a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></div>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>Software</h1>
+</div>
+<p>This page collects public code repositories and software artifacts from my recent work.</p>
+<h2>LLM Agents and Long-Context Learning</h2>
+<h3>SCOPE</h3>
+<p><b>Self-evolving Context Optimization via Prompt Evolution</b>.</p>
+<ul>
+<li><p>Problem: LLM agents receive large, dynamic execution contexts but often fail to manage useful signals from traces, errors, and tool outputs.</p>
+</li>
+<li><p>Method: Treats context management as online prompt optimization, evolving agent prompts from execution traces.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2512.15374">Paper</a>, <a href="https://github.com/JarvisPei/SCOPE">Code</a>.</p>
+</li>
+<li><p>Keywords: LLM agents; prompt evolution; context optimization.</p>
+</li>
+</ul>
+<h3>MemDLM</h3>
+<p><b>Memory-Enhanced DLM Training</b>.</p>
+<ul>
+<li><p>Problem: Diffusion language models need stronger training signals for long-context and denoising dynamics.</p>
+</li>
+<li><p>Method: Introduces memory-enhanced training with a parametric memory channel.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2603.22241">Paper</a>, <a href="https://github.com/JarvisPei/MemDLM">Code</a>.</p>
+</li>
+<li><p>Keywords: diffusion language models; parametric memory; long-context training.</p>
+</li>
+</ul>
+<h2>Efficient LLMs and Model Compression</h2>
+<h3>CMoE</h3>
+<p><b>Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis</b>.</p>
+<ul>
+<li><p>Problem: Dense LLMs are expensive at inference time, while training MoE models from scratch is costly.</p>
+</li>
+<li><p>Method: Converts dense FFNs into sparse MoE layers through analytical post-training restructuring based on activation patterns.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2502.04416">Paper</a>, <a href="https://github.com/JarvisPei/CMoE">Code</a>.</p>
+</li>
+<li><p>Keywords: FFN-to-MoE; analytical restructuring; LLM acceleration.</p>
+</li>
+</ul>
+<h3>PreMoE</h3>
+<p><b>Proactive Inference for Efficient Mixture-of-Experts</b>.</p>
+<ul>
+<li><p>Problem: MoE models are usually deployed with full expert capacity even when a deployment scenario may only need a subset.</p>
+</li>
+<li><p>Method: Compiles sparse MoE variants before serving through expert pruning and deployment-specific sparsity.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2505.17639">Paper</a>, <a href="https://github.com/JarvisPei/PreMoE">Code</a>.</p>
+</li>
+<li><p>Keywords: MoE expert pruning; proactive inference; efficient deployment.</p>
+</li>
+</ul>
+<h3>FuseGPT</h3>
+<p><b>From Pruning to Grafting: Dynamic Knowledge Redistribution via Learnable Layer Fusion</b>.</p>
+<ul>
+<li><p>Problem: Structured pruning removes whole transformer blocks and can discard useful knowledge.</p>
+</li>
+<li><p>Method: Reframes pruning as learnable knowledge grafting, redistributing knowledge from pruned blocks into surviving layers.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2411.14507">Paper</a>, <a href="https://github.com/JarvisPei/FuseGPT">Code</a>.</p>
+</li>
+<li><p>Keywords: structured pruning; layer fusion; knowledge grafting.</p>
+</li>
+</ul>
+<h2>LLM Evaluation</h2>
+<h3>Behavioral Fingerprinting</h3>
+<p><b>Behavioral Fingerprinting of Large Language Models</b>.</p>
+<ul>
+<li><p>Problem: Accuracy-only benchmarks miss cognitive and alignment-style differences between LLMs.</p>
+</li>
+<li><p>Method: Profiles models through behavioral dimensions such as reasoning, robustness, sycophancy, and interaction style.</p>
+</li>
+<li><p>Links: <a href="https://arxiv.org/abs/2509.04504">Paper</a>, <a href="https://github.com/JarvisPei/Behavioral-Fingerprinting">Code</a>.</p>
+</li>
+<li><p>Keywords: LLM evaluation; behavioral fingerprinting; alignment robustness.</p>
+</li>
+</ul>
+<h2>Other Tools</h2>
+<h3>EvolveClaw</h3>
+<p><b>Make your OpenClaw agent self-improving</b>.</p>
+<ul>
+<li><p>Problem: Agent systems can benefit from self-improvement loops rather than static behavior.</p>
+</li>
+<li><p>Method: Provides a TypeScript tool for evolving OpenClaw-style agents.</p>
+</li>
+<li><p>Links: <a href="https://github.com/JarvisPei/EvolveClaw">Code</a>.</p>
+</li>
+<li><p>Keywords: agent systems; self-improvement; TypeScript tooling.</p>
+</li>
+</ul>
+<h3>ArxivFinder</h3>
+<p><b>arXiv Paper Finder and Notifier</b>.</p>
+<ul>
+<li><p>Problem: Keeping track of relevant arXiv papers can be time-consuming.</p>
+</li>
+<li><p>Method: Provides a lightweight paper-finding and notification utility.</p>
+</li>
+<li><p>Links: <a href="https://github.com/JarvisPei/ArxivFinder">Code</a>.</p>
+</li>
+<li><p>Keywords: research tooling; arXiv monitoring; paper discovery.</p>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<a title="web analytics" href="http://statcounter.com/"target="_blank"><img
+src="https://c.statcounter.com/13180237/0/e33f6be1/0/" alt="web
+analytics" style="border:none;"></a>
+</body>
+</html>
