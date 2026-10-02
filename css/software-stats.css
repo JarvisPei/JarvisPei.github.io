@@ -1,0 +1,49 @@
+.stats-note {
+  color: #555;
+  font-size: 0.88em;
+  line-height: 1.5;
+  max-width: 780px;
+}
+
+.software-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0.3em 0 0.7em;
+}
+
+.software-stats a.stat-badge {
+  align-items: center;
+  background: #faf8f5;
+  border: 1px solid #e5dfd8;
+  border-radius: 5px;
+  color: #463b32;
+  display: inline-flex;
+  font-family: Georgia, serif;
+  font-size: 0.85em;
+  gap: 0.35em;
+  line-height: 1.6;
+  padding: 0.18em 0.65em;
+  text-decoration: none;
+}
+
+.software-stats a.stat-badge:hover,
+.software-stats a.stat-badge:focus-visible {
+  background: #fff2e4;
+  border-color: #bf8b54;
+}
+
+.stat-badge strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-badge[data-status="cached"]::after {
+  content: "cached";
+  color: #666;
+  font-size: 0.8em;
+}
+
+.stat-badge[data-status="unavailable"] {
+  background: #fafafa;
+  color: #666;
+}
