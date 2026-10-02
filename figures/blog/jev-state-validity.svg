@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="350" viewBox="0 0 960 350" role="img" aria-labelledby="title desc">
+  <title id="title">A judgment is tied to the state it inspected</title>
+  <desc id="desc">The timeline shows a test passing for version one, an edit to version two invalidating that evidence, a new test for version two, and a later action based on the current result.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="960" height="350" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <g text-anchor="middle" font-size="21">
+      <text x="115" y="63">Test passes</text><text x="115" y="92">for artifact v1</text>
+      <text x="345" y="63">Artifact edited</text><text x="345" y="92">to v2</text>
+      <text x="660" y="63">New test passes</text><text x="660" y="92">for v2</text>
+      <text x="875" y="78">Action</text>
+    </g>
+    <path d="M50 135H920" stroke="#20252b" stroke-width="2.2" fill="none" marker-end="url(#arrow)" />
+    <g fill="#20252b"><circle cx="115" cy="135" r="4" /><circle cx="345" cy="135" r="4" /><circle cx="660" cy="135" r="4" /><circle cx="875" cy="135" r="4" /></g>
+    <path d="M345 152V294" stroke="#59636f" stroke-width="1.8" stroke-dasharray="6 5" />
+    <rect x="115" y="185" width="230" height="55" rx="5" fill="#eaf0f9" stroke="#20252b" stroke-width="1.7" />
+    <text x="230" y="220" text-anchor="middle" font-size="20">judgment for v1</text>
+    <text x="495" y="210" text-anchor="middle" font-size="19">earlier result</text>
+    <text x="495" y="238" text-anchor="middle" font-size="19">is now stale</text>
+    <rect x="660" y="252" width="215" height="55" rx="5" fill="#edf5ef" stroke="#20252b" stroke-width="1.7" />
+    <text x="768" y="287" text-anchor="middle" font-size="20">current v2 evidence</text>
+    <g stroke="#20252b" stroke-width="2.1" fill="none" marker-end="url(#arrow)"><path d="M660 149V238" /><path d="M875 250V149" /></g>
+    <text x="50" y="330" font-size="18">Observe informative events. Recheck validity before acting.</text>
+  </g>
+</svg>

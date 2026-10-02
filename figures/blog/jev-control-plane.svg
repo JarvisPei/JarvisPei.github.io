@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">A decision model inside the agent control plane</title>
+  <desc id="desc">Visible state flows to a decision model and then application policy. The policy directs a generator and tools. Observed evidence updates the state, while code enforces permissions, budgets, and checks.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="960" height="420" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <text x="450" y="48" text-anchor="middle" font-size="21" font-weight="700">Questions + alternatives</text>
+    <path d="M450 66V133" stroke="#20252b" stroke-width="2.3" fill="none" marker-end="url(#arrow)" />
+    <text x="782" y="114" text-anchor="middle" font-size="17">permissions · budgets · checks</text>
+    <g stroke="#20252b" stroke-width="2">
+      <rect x="35" y="145" width="220" height="110" rx="9" fill="#eaf0f9" />
+      <rect x="330" y="145" width="240" height="110" rx="9" fill="#fff0e4" />
+      <rect x="650" y="145" width="270" height="110" rx="9" fill="#f0f2f5" />
+      <rect x="675" y="310" width="220" height="77" rx="9" fill="#fff" />
+    </g>
+    <g text-anchor="middle">
+      <text x="145" y="183" font-size="22" font-weight="700">Visible state</text>
+      <text x="145" y="214" font-size="19">task, history, evidence</text>
+      <text x="450" y="183" font-size="22" font-weight="700">Decision model</text>
+      <text x="450" y="212" font-size="19">typed answers</text>
+      <text x="450" y="239" font-size="19">+ probabilities</text>
+      <text x="785" y="183" font-size="22" font-weight="700">Application policy</text>
+      <text x="785" y="214" font-size="19">act, inspect, or defer</text>
+      <text x="785" y="342" font-size="21" font-weight="700">Generator + tools</text>
+      <text x="785" y="370" font-size="18">execute and observe</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2.3" fill="none" marker-end="url(#arrow)">
+      <path d="M267 200H317" />
+      <path d="M582 200H637" />
+      <path d="M785 267V297" />
+      <path d="M663 349H145V269" />
+    </g>
+    <text x="390" y="330" text-anchor="middle" font-size="18">observed evidence updates state</text>
+  </g>
+</svg>

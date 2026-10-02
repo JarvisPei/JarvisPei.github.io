@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A perspective on Jev-style decision models inside agent loops, informed by NeoHorse-Jev experiments on customization, evidence, workload, and software policy." />
+  <meta name="author" content="Zehua Pei" />
+  <link rel="canonical" href="https://jarvispei.github.io/blog/jev-agent-control-plane.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Where Jev Fits in an Agent Loop" />
+  <meta property="og:description" content="A perspective from building NeoHorse-Jev: evidence, shared-state workloads, customization, and useful software policies." />
+  <meta property="og:url" content="https://jarvispei.github.io/blog/jev-agent-control-plane.html" />
+  <meta property="og:image" content="https://jarvispei.github.io/figures/blog/jev-control-plane-social.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="A decision model inside an agent loop, connecting visible state to application policy and execution." />
+  <meta property="article:published_time" content="2026-10-02" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Where Jev Fits in an Agent Loop" />
+  <meta name="twitter:description" content="Fast semantic judgments, useful software policies, and lessons from building NeoHorse-Jev." />
+  <meta name="twitter:image" content="https://jarvispei.github.io/figures/blog/jev-control-plane-social.png" />
+  <meta name="twitter:image:alt" content="A decision model inside the agent control plane." />
+  <link rel="stylesheet" href="../jemdoc.css" />
+  <link rel="stylesheet" href="../css/myMiddle.css" />
+  <link rel="stylesheet" href="../css/blog.css" />
+  <link rel="shortcut icon" href="../cuhk_logo.png" />
+  <script src="../profile-links.js" defer></script>
+  <title>Where Jev Fits in an Agent Loop — Zehua Pei</title>
+</head>
+<body class="blog-page">
+<a class="skip-link" href="#layout-content">Skip to content</a>
+<div class="blog-shell">
+  <nav id="layout-menu" aria-label="Main navigation">
+    <div class="menu-category">Zehua Pei</div>
+    <div class="page-links">
+      <div class="menu-item"><a href="../index.html">Home</a></div>
+      <div class="menu-item"><a href="../publications.html">Publications</a></div>
+      <div class="menu-item"><a href="../software.html">Software</a></div>
+      <div class="menu-item"><a href="../blog.html" class="current" aria-current="page">Blog</a></div>
+    </div>
+    <div class="profile-menu">
+      <div class="menu-category">Profiles</div>
+      <div class="menu-item"><a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google&nbsp;Scholar</a></div>
+      <div class="menu-item"><a href="https://github.com/JarvisPei">GitHub</a></div>
+      <div class="menu-item"><a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></div>
+    </div>
+  </nav>
+  <main id="layout-content">
+    <header class="article-header">
+      <a class="back-link" href="../blog.html">← All posts</a>
+      <p class="post-meta"><time datetime="2026-10-02">October 2, 2026</time></p>
+      <h1>Where Jev Fits in an Agent Loop</h1>
+      <p class="subtitle">Fast semantic judgments, useful software policies, and what I learned from building NeoHorse-Jev.</p>
+      <p class="post-meta">Zehua Pei · Experiments with the NeoHorse Team</p>
+    </header>
+    <article class="blog-article">
+      <p class="lead">A surprising amount of agent engineering happens between the obvious steps. We know how to call a model, execute a tool, and store its result. The awkward part is deciding whether a passage is relevant, whether an error deserves another attempt, or whether the latest evidence is enough to move on.</p>
+      <p>Some of these questions belong in ordinary code. A missing file is a missing file. Others depend on meaning, and writing a reliable rule becomes difficult. Calling a large language model for every such judgment works, but it can put generation, parsing, and another round trip on the critical path of a small decision.</p>
+      <p>This is why <a href="https://docs.typesafe.ai/introduction">Jev</a> caught my attention. Its interface takes a state and typed questions, then returns answers and probability distributions that a program can consume. While developing <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B">NeoHorse-Jev-4B</a>, we explored what that interface could contribute to an existing agent loop: form actions, constraints, recovery, context selection, semantic screening, and several questions over a shared state.</p>
+      <div class="thesis"><p>My working view is that decision models can become <strong>programmable semantic operators in an agent’s control plane</strong>. Their value depends on three things: the evidence they can see, the work they are asked to perform, and the policy that turns their answers into actions.</p></div>
+      <p>By <em>control plane</em>, I mean the part of the system that determines what work happens next. The generator writes the patch or answer; tools act on the environment; the control plane decides what to read, where to spend effort, and when to ask for another check.</p>
+
+      <details class="article-toc" open>
+        <summary>In this essay</summary>
+        <ol>
+          <li><a href="#interface">Make the judgment a callable operation</a></li>
+          <li><a href="#evidence">A small answer still needs enough evidence</a></li>
+          <li><a href="#customization">Customization can give the operator a useful scope</a></li>
+          <li><a href="#workload">The workload decides whether “fast” is useful</a></li>
+          <li><a href="#allocation">Use judgments to allocate the next work</a></li>
+          <li><a href="#monitoring">A persistent observer needs a state contract</a></li>
+          <li><a href="#evaluation">Evaluate the intervention, not just the answer</a></li>
+        </ol>
+      </details>
+
+      <section aria-labelledby="interface">
+        <h2 id="interface">1. Make the judgment a callable operation</h2>
+        <p>The useful abstraction is simple: describe the visible state, name the question, and specify the alternatives. A tool selector can ask which available tool fits the request. A context manager can ask whether a passage supports a requirement. A monitor can ask whether the current evidence warrants further inspection.</p>
+        <p>The same interface can support binary judgments, choices, and ordered ratings. Different implementations sit behind it: <a href="https://github.com/jaredpalmer/kev">Kev</a> uses a pointer-style readout over an adapted language model, while <a href="https://github.com/bespokelabsai/nimble">Nimble</a> documents direct answer-token scoring. The API shape and the execution strategy are separate choices. Exposing a decision endpoint does not by itself mean the runtime shares context across questions.</p>
+        <figure>
+          <div class="figure-scroll"><a href="../figures/blog/jev-control-plane.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the agent control-plane diagram at full size"><img src="../figures/blog/jev-control-plane.svg" width="960" height="420" alt="Visible state feeds a decision model, whose answers feed application policy. Policy directs the generator and tools, and observed results update the state." /></a></div>
+          <figcaption><span class="figure-help">Swipe to inspect the diagram, or tap to open it.</span><strong>Judgment inside the loop.</strong> The model evaluates a semantic relation; software decides what that answer is allowed to change.</figcaption>
+        </figure>
+        <p>This separation makes the component easier to inspect. “The model thinks the passage is relevant” and “the program should delete every other passage” become two different decisions. One is a semantic estimate; the other is a policy with consequences.</p>
+        <p>It also gives uncertainty somewhere to go. A distribution can determine whether to accept a suggestion, request more evidence, or use a fallback. The threshold belongs to the application. It should reflect the costs of a missed issue and an unnecessary interruption.</p>
+        <p>Diogo Almeida’s <a href="https://www.latent.space/p/jev">Latent Space interview</a> helped sharpen this framing for me: the ambition is to place many small, software-consumed judgments inside products. I find that more interesting than asking a decision model to impersonate an entire agent.</p>
+      </section>
+
+      <section aria-labelledby="evidence">
+        <h2 id="evidence">2. A small answer still needs enough evidence</h2>
+        <p>One of our first instincts was to build a progress monitor. “Is the agent making progress?” sounds like a compact question. In practice, it asks the model to understand the objective, prior attempts, the environment, and whether another attempt is worthwhile. Shortening the answer to a boolean leaves that inference problem intact.</p>
+        <p>A more useful starting point is an explicit relation: <em>does this passage support this requirement?</em> Or: <em>is this proposed operation compatible with the stated scope?</em> The question names both the evidence and what should be inferred from it. If a timestamp, hash, or exact permission check settles the relation, I would use code instead.</p>
+        <p>Candidate construction is part of this evidence problem. A decision model cannot choose an answer that the surrounding system never offered. In a small SQuAD2 extraction diagnostic, our proposal stage supplied the exact reference span for only <strong>12 of 32 answerable questions</strong>. Direct language-model extraction reached normalized exact match on 32/40 total cases; proposal plus decision selection reached 16/40 and took longer. The selector was downstream of the main bottleneck.</p>
+        <p>This changed how I think about “none of the above.” It makes a deficient candidate set visible, but the program still needs a way to expand the set, retrieve more evidence, or hand the task back to a generator. A well-designed decision interface should expose that recovery path.</p>
+        <p>There is a related distinction between <em>false</em>, <em>not mentioned</em>, and <em>unknown</em>. On a document checklist, we asked our decision model to evaluate all 17 ContractNLI hypotheses for each of 61 development contracts. It answered 824/1,037 judgments correctly, yet only <strong>one contract had a completely correct checklist</strong>. Of 423 “not mentioned” labels, 130 were incorrectly converted into support or contradiction. Local accuracy did not make the whole document safely verified.</p>
+      </section>
+
+      <section aria-labelledby="customization">
+        <h2 id="customization">3. Customization can give the operator a useful scope</h2>
+        <p>Task-specific adaptation was one of the clearest positive signals in our exploration. A form-action specialist completed a controlled form loop that the general-purpose controller often failed. The state described the form and the available actions; this was structured-state action selection, not a claim about arbitrary screenshot-based browser use.</p>
+        <p>A separate constraint specialist learned a useful distinction between compatible actions, incompatible actions, and insufficient information. On 12 new cases from four held-out scenario families, we varied wording, names, and option order to produce 432 views. Accuracy improved from 294/432 to 351/432. Much of the gain came from recognizing when the supplied information did not justify an answer.</p>
+        <div class="table-scroll">
+          <table>
+            <caption>Two local customization probes</caption>
+            <thead><tr><th scope="col">Measure</th><th scope="col" class="numeric">General-purpose</th><th scope="col" class="numeric">Specialist</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Form-loop completion</th><td class="numeric">80/100</td><td class="numeric">100/100</td></tr>
+              <tr><th scope="row">Constraint judgments, related views</th><td class="numeric">294/432</td><td class="numeric">351/432</td></tr>
+              <tr><th scope="row">Constraint cases correct in every view</th><td class="numeric">6/12</td><td class="numeric">7/12</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">The form and constraint specialists are different models. The form tests share authored task templates; the constraint views are repeated measurements of 12 cases, not 432 independent tasks.</p>
+        <p>The attraction is that an application can own the meaning of its operator. “Choose the next form action” or “check compatibility with this scope” has a concrete role in the software. Once that role is stable, a specialist can be valuable without becoming a better general assistant.</p>
+        <p>There was an important second result. After constraint adaptation, mean accuracy on our frozen, adapted Nimble, VitaminC, and MASSIVE subsets moved only from 83.26% to 82.70%, but every subset’s negative log-likelihood, Brier score, and calibration error worsened. Retaining the right answer most of the time did not preserve the probability quality that a threshold-based policy would use.</p>
+        <p>I would therefore define a specialist’s operating scope explicitly and evaluate its probabilities inside that scope. Outside it, the general controller or another fallback remains available. And I would diagnose the mismatch before choosing how to customize: some tasks need new semantic distinctions, while others need better evidence or a different threshold. Parameter updates are only one of these tools.</p>
+      </section>
+
+      <section aria-labelledby="workload">
+        <h2 id="workload">4. The workload decides whether “fast” is useful</h2>
+        <p>Prefill-only execution avoids decoding an answer token by token. It still pays to read the state, process question and option descriptions, dispatch requests, and handle caches. The opportunity becomes especially interesting when several judgments genuinely need the same state.</p>
+        <figure>
+          <div class="figure-scroll"><a href="../figures/blog/jev-shared-state.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the shared-state diagram at full size"><img src="../figures/blog/jev-shared-state.svg" width="960" height="400" alt="Repeated processing reads the state separately for each question. Shared processing reads the state once and branches into question-specific work." /></a></div>
+          <figcaption><span class="figure-help">Swipe to inspect the diagram, or tap to open it.</span><strong>Several required answers over shared state.</strong> Each q is a question and each p its answer distribution. Reuse removes repeated state computation; copying, branching, and scheduling still have a cost.</figcaption>
+        </figure>
+        <p>We tested eight short public passages, each with 16 original questions. At 16 questions, cold shared-state execution reduced mean request time from <strong>1,324 ms to 711 ms</strong>. At one question, the shared path instead increased time from 106 ms to 127 ms. Reuse has overhead, so the number of required judgments matters.</p>
+        <p>Now compare that with tool selection. A list of ten tools does not necessarily imply ten required answers. A generator can read the whole list and emit one identifier. A candidate-wise scorer may perform a judgment for every tool, even though the application only needs one choice.</p>
+        <div class="table-scroll">
+          <table>
+            <caption>Two workloads from our local diagnostics</caption>
+            <thead><tr><th scope="col">Required output</th><th scope="col">Implementation</th><th scope="col" class="numeric">Mean time</th><th scope="col" class="numeric">Correct</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" rowspan="3">16 answers per passage</th><td>Decision: repeated state</td><td class="numeric">1,324 ms</td><td class="numeric">98/128</td></tr>
+              <tr><td>Decision: cold shared state</td><td class="numeric">711 ms</td><td class="numeric">98/128</td></tr>
+              <tr><td>LM: one full-list response</td><td class="numeric">1,229 ms</td><td class="numeric">113/128</td></tr>
+              <tr><th scope="row" rowspan="2">One required tool<br />from 8–10 tools</th><td>Decision: candidate scoring</td><td class="numeric">1,302 ms</td><td class="numeric">15/16</td></tr>
+              <tr><td>LM: whole-set response</td><td class="numeric">321 ms</td><td class="numeric">14/16</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">These are reference-runtime diagnostics, not production speed benchmarks. The decision model used FP32 and the generator BF16; model loading was excluded. Shared execution preserved recorded argmax answers but had probability drift up to 0.00093329 and failed numerical-equivalence checks.</p>
+        <p>The lesson I take from these measurements is to count the answers the application actually needs. Dense checklists and repeated record coding are plausible targets for state reuse. A single choice from many candidates is a different workload, and a well-engineered generator can be competitive.</p>
+        <p>The same accounting applies to context compression. A selector can reduce the reader’s input while adding its own inference, a serial round trip, and later readback. In our recoverable-context probe, the selected-context path answered 14/24 questions correctly versus 13/24 for full-context reading, but took 1,416 ms versus 270 ms. The extra answer did not come with an efficiency win. The public <a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev validation</a> similarly separates reduced input tokens from end-to-end wall time.</p>
+      </section>
+
+      <section aria-labelledby="allocation">
+        <h2 id="allocation">5. Use judgments to allocate the next work</h2>
+        <p>The checklist result points to a more promising use than having the model certify that a document is finished. A decision vector can tell the system where to spend effort next.</p>
+        <p>Imagine a research agent supporting several claims from a document collection. For each claim, the operator returns a status: supported, conflicting, or missing. The program retains supporting evidence, investigates conflicts, and retrieves material for gaps. The vector becomes a work queue.</p>
+        <figure>
+          <div class="figure-scroll"><a href="../figures/blog/jev-work-allocation.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the work-allocation diagram at full size"><img src="../figures/blog/jev-work-allocation.svg" width="960" height="390" alt="Evidence-status judgments direct retaining sources, resolving conflicts, or retrieving more evidence. New evidence returns to the next judgment, and completion uses a separate acceptance check." /></a></div>
+          <figcaption><span class="figure-help">Swipe to inspect the diagram, or tap to open it.</span><strong>A design direction: allocate recoverable next work.</strong> Status judgments guide the next action; completed work still needs its own acceptance check.</figcaption>
+        </figure>
+        <p>The consequences of errors are different here. An unnecessary “missing” judgment may cause an extra retrieval. A mistaken “supported” judgment may end investigation prematurely. The program can budget additional searches and reserve a separate acceptance check for consequential claims.</p>
+        <p>This suggests a useful integration sequence: observe decisions in shadow mode, compare disagreements, then let the operator advise or direct a bounded action. The <a href="https://github.com/qybaihe/mu">mu harness</a> makes active, shadow, and disabled modes explicit. That is a practical way to learn what a controller changes before assigning it broad authority.</p>
+        <p>Recoverability matters beyond retrieval. A context manager can hide evidence from the next prompt while retaining a path to read it back. A tool triage component can request an argument check before execution. A recovery component can suggest a next diagnostic rather than declare the root cause solved.</p>
+        <p>Semantic advice and enforcement also need distinct paths. In our executable constraint probes, a model sometimes recognized a forbidden operation while the generator still executed it. Machine-checkable permissions and limits need enforcement in code. The semantic operator helps with the residual judgment; it does not grant permission.</p>
+      </section>
+
+      <section aria-labelledby="monitoring">
+        <h2 id="monitoring">6. A persistent observer needs a state contract</h2>
+        <p>The idea of a resident, low-latency judgment component remains compelling to me. It could watch changes in a workspace, tool results, or an evidence collection and help decide when another inspection is worthwhile.</p>
+        <p>Cheap repeated inference makes this feasible, but the observation policy determines whether it is useful. Which event should trigger a new judgment? What history should remain visible? How long is the answer valid? Responding to every change can create unnecessary review and oscillation.</p>
+        <figure>
+          <div class="figure-scroll"><a href="../figures/blog/jev-state-validity.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the state-validity timeline at full size"><img src="../figures/blog/jev-state-validity.svg" width="960" height="350" alt="A passing test for artifact version one becomes stale after an edit to version two. A new test for version two provides current evidence before action." /></a></div>
+          <figcaption><span class="figure-help">Swipe to inspect the diagram, or tap to open it.</span><strong>A judgment has a state version.</strong> Correct for an earlier snapshot can still be wrong to act on now.</figcaption>
+        </figure>
+        <p>A passing test is a simple example. A decision can correctly report success for artifact v1. Once the artifact changes to v2, that old judgment should not authorize the next action. Version binding and invalidation are exact bookkeeping, so the application should handle them directly.</p>
+        <p>The integration can wrap a model answer with the state version it inspected. This sketch shows the division of labor; it is not a provider-specific API:</p>
+        <pre><code>snapshot = capture_state()
+scores = judge(snapshot, questions)
+
+if current_version() != snapshot.version:
+    schedule_recheck()
+elif scores["needs_more_evidence"] &gt; review_threshold:
+    queue_evidence_search()
+else:
+    continue_agent()
+
+# Completion and permissions use separate application checks.</code></pre>
+        <p>A monitor should therefore retain three things alongside the scores: what was judged, when it was judged, and what the result is allowed to change. I would first use such a component to schedule inspection around informative events. Broad verdicts like “this agent is stuck” demand a much stronger understanding of the process.</p>
+      </section>
+
+      <section aria-labelledby="evaluation">
+        <h2 id="evaluation">7. Evaluate the intervention, not just the answer</h2>
+        <p>The most useful evaluation unit is a decision opportunity inside a workflow. What would have happened without the judgment? What work did it avoid or add? What did its mistakes cost? Did the downstream task finish?</p>
+        <p>This perspective suggests a short set of checks before adding a new controller:</p>
+        <ol>
+          <li><strong>Locate the leverage.</strong> Insert correct decisions as an oracle diagnostic. If even perfect judgments do not improve the workflow, model accuracy is not the immediate bottleneck.</li>
+          <li><strong>Use a capable baseline.</strong> Compare with rules, an available embedding method, and a generator producing the same required output. Trivial Markdown fences should not manufacture a decision-model win.</li>
+          <li><strong>Check the consuming policy.</strong> Measure both mistaken acceptance and unnecessary rejection at the coverage the program will use. A normalized distribution is not automatically calibrated; <a href="https://docs.typesafe.ai/confidence">TypeSafe’s confidence documentation</a> also distinguishes its confidence statistic from answer probabilities.</li>
+          <li><strong>Charge the whole intervention.</strong> Include candidate construction, judgment latency, fallback, readback, and subsequent calls. Preserve the quality of completed work.</li>
+        </ol>
+        <p>The emerging community points to several promising locations. <a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a> integrates a decision controller with memory organization and retrieval. A <a href="https://arxiv.org/abs/2609.24052">crash-narrative coding study</a> uses a 27-question schema across 195,857 records and audits the answers against human judgments. These are concrete workloads: named decisions, repeated state structures, and observable consequences. Their reported results concern the respective complete systems, rather than a universal gain from adding Jev.</p>
+        <p>My interest has shifted from finding one impressive decision endpoint to finding <em>owned semantic operators</em>: operations an application needs often enough to specialize, inspect, and connect to a stable policy. The clearest opportunities seem to be dense judgments over shared evidence, scoped customization, and decisions that direct recoverable investigation.</p>
+        <div class="thesis"><p>The question I now ask is: <strong>which part of this workflow becomes better software when its semantic judgment is made explicit?</strong> That is where I would start building with Jev.</p></div>
+      </section>
+
+      <section aria-labelledby="notes">
+        <h2 id="notes">Sources and experimental notes</h2>
+        <p class="note">The local results above consolidate our earlier NeoHorse-Jev exploration; no new training or model evaluation was run for this essay. They include public development selections and small constructed tasks. Related wording variants and repeated starts are not independent cases. Timing refers to the recorded reference implementations. Work-allocation and persistent-observer patterns are design directions motivated by these observations.</p>
+        <p class="note">The released model is <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B">NeoHorse-Jev-4B</a>, with <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B-GGUF">GGUF weights and a decision-aware runtime</a>. The experimental shared-state path is separate from the archived sequential GGUF runtime. A custom decision readout needs runtime support; a generic chat endpoint is a different interface.</p>
+        <ul class="note">
+          <li>Interface and framing: <a href="https://docs.typesafe.ai/introduction">TypeSafe documentation</a> and <a href="https://www.latent.space/p/jev">Diogo Almeida’s Latent Space interview</a>.</li>
+          <li>Open implementations: <a href="https://github.com/jaredpalmer/kev">Kev</a> and <a href="https://github.com/bespokelabsai/nimble">Nimble</a>.</li>
+          <li>Harness integration: <a href="https://github.com/qybaihe/mu">mu</a> and <a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev’s validation record</a>.</li>
+          <li>Workload studies: <a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a> and <a href="https://arxiv.org/abs/2609.24052">Calibrated Decisions at Scale</a>.</li>
+          <li>Dataset definitions for the local evidence probes: <a href="https://aclanthology.org/P18-2124/">SQuAD2</a> and <a href="https://aclanthology.org/2021.findings-emnlp.164/">ContractNLI</a>.</li>
+        </ul>
+      </section>
+    </article>
+    <footer class="blog-footer"><p><a href="../blog.html">← All posts</a> · <a href="../index.html">Homepage</a></p></footer>
+  </main>
+</div>
+</body>
+</html>

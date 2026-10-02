@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="390" viewBox="0 0 960 390" role="img" aria-labelledby="title desc">
+  <title id="title">Use evidence judgments to allocate recoverable work</title>
+  <desc id="desc">Evidence can be judged supported, conflicting, or missing. The policy uses those statuses to retain sources, resolve conflicts, or retrieve evidence, while completion is checked separately.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="960" height="390" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <g font-size="22" font-weight="700">
+      <text x="40" y="42">Evidence</text><text x="363" y="42">Decision vector</text><text x="700" y="42">Next work</text>
+    </g>
+    <rect x="40" y="86" width="230" height="162" rx="8" fill="#eaf0f9" stroke="#20252b" stroke-width="2" />
+    <g text-anchor="middle">
+      <text x="155" y="133" font-size="22" font-weight="700">Claims + sources</text>
+      <text x="155" y="170" font-size="19">current evidence</text>
+      <text x="155" y="201" font-size="19">and open questions</text>
+    </g>
+    <g stroke="#20252b" stroke-width="1.8">
+      <rect x="363" y="80" width="232" height="52" rx="6" fill="#edf5ef" />
+      <rect x="363" y="150" width="232" height="52" rx="6" fill="#fbefed" />
+      <rect x="363" y="220" width="232" height="52" rx="6" fill="#fff0e4" />
+    </g>
+    <g font-size="21">
+      <text x="479" y="113" text-anchor="middle">Supported</text>
+      <text x="479" y="183" text-anchor="middle">Conflicting</text>
+      <text x="479" y="253" text-anchor="middle">Missing</text>
+      <text x="700" y="113">Retain the evidence</text>
+      <text x="700" y="183">Resolve the conflict</text>
+      <text x="700" y="253">Retrieve more evidence</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2.2" fill="none" marker-end="url(#arrow)">
+      <path d="M282 167H350" />
+      <path d="M609 106H681" /><path d="M609 176H681" /><path d="M609 246H681" />
+      <path d="M914 278V310H155V261" />
+    </g>
+    <text x="526" y="298" font-size="18" text-anchor="middle">new evidence updates the next judgment</text>
+    <path d="M40 343H920" stroke="#d8dce2" stroke-width="1.5" />
+    <text x="480" y="372" font-size="20" font-weight="700" text-anchor="middle">Completion uses a separate acceptance check.</text>
+  </g>
+</svg>
