@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1200" height="500" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>NeoHorse routing-guided agentic training overview</title>
+	<desc>Diverse tasks pass through a routing harness, producing data and routing signals for agentic training. Capability feedback informs the next training iteration.</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1200" height="500"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-500)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="1200" height="500" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="80" y="416" width="44" height="36" rx="7" ry="7" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="92.9625" y="428" style="font-family: Helvetica-Bold; font-size: 12.5px;fill: rgb(15%,43%,70%); stroke:none;" transform="translate(0,856) scale(1,-1)">&lt;/&gt;</text>
+			<rect x="135" y="416" width="44" height="36" rx="7" ry="7" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 136,442 L 178,442 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<circle cx="144" cy="447" r="1.7" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(13%,49%,43%); fill-rule: evenodd;"/>
+			<path d="M 145,433 L 169,433 Z" style="stroke: rgb(13%,49%,43%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<path d="M 145,426 L 163,426 Z" style="stroke: rgb(13%,49%,43%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<rect x="190" y="416" width="44" height="36" rx="7" ry="7" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<g transform=" matrix(1,0,0,-1,200,446)">
+				<path d="M 15 2 L 11 2 C 9.895431 2 9 2.895431 9 4 L 9 15 C 9 16.104569 9.895431 17 11 17 L 19 17 C 20.104569 17 21 16.104569 21 15 L 21 8 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16.706 2.706 C 16.254226 2.252594 15.640058 1.99843 15 2 L 15 7 C 15 7.552285 15.447715 8 16 8 L 21 8 C 21.00157 7.359942 20.747406 6.745774 20.294 6.294 Z " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 5 7 C 3.895431 7 3 7.895431 3 9 L 3 20 C 3 21.104569 3.895431 22 5 22 L 13 22 C 13.714513 21.999982 14.374743 21.618786 14.732 21 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="95.744" y="391" style="font-family: Helvetica-Bold; font-size: 19px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,782) scale(1,-1)">Diverse tasks</text>
+			<polyline points="180 381, 180 366" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.7; fill: None; fill-rule: evenodd;"/>
+			<polygon points="180 355, 174.5 366, 185.5 366" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<g transform=" matrix(1.125,0,0,-1.125,642.884,458.8)">
+				<path d="M 3 3 L 3 19 C 3 20.104569 3.895431 21 5 21 L 21 21 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 18 17 L 18 9 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 13 17 L 13 5 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 17 L 8 14 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="679.884" y="439" style="font-family: Helvetica-Bold; font-size: 21px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,878) scale(1,-1)">Capability feedback</text>
+			<polyline points="1070 355, 1070 396, 590 396, 590 285, 545 285, 545 267" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.6; fill: None; fill-rule: evenodd; stroke-dasharray: 10, 6;"/>
+			<polygon points="545 256, 539.5 267, 550.5 267" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<rect x="35" y="120" width="290" height="235" rx="15" ry="15" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 2.4; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="37" y="297" width="286" height="56" rx="13" ry="13" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(90%,94%,98%); fill-rule: evenodd;"/>
+			<path d="M 36,296 L 324,296 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.7;"/>
+			<g transform=" matrix(1.125,0,0,-1.125,77.4895,335.8)">
+				<rect x="16.0" y="16.0" width="6.0" height="6.0" rx="1.0" ry="1.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<rect x="2.0" y="16.0" width="6.0" height="6.0" rx="1.0" ry="1.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<rect x="9.0" y="2.0" width="6.0" height="6.0" rx="1.0" ry="1.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 5 16 L 5 13 C 5 12.447715 5.447715 12 6 12 L 18 12 C 18.552285 12 19 12.447715 19 13 L 19 16 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 12 L 12 8 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="114.4895" y="316" style="font-family: Helvetica-Bold; font-size: 21px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,632) scale(1,-1)">Routing Harness</text>
+			<g transform=" matrix(1.041667,0,0,-1.041667,123,289)">
+				<rect x="8.0" y="2.0" width="8.0" height="4.0" rx="1.0" ry="1.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16 4 L 18 4 C 19.104569 4 20 4.895431 20 6 L 20 20 C 20 21.104569 19.104569 22 18 22 L 6 22 C 4.895431 22 4 21.104569 4 20 L 4 6 C 4 4.895431 4.895431 4 6 4 L 8 4 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 11 L 16 11 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 16 L 16 16 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 11 L 8.01 11 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 16 L 8.01 16 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<g transform=" matrix(1.041667,0,0,-1.041667,168,289)">
+				<path d="M 15 2 L 11 2 C 9.895431 2 9 2.895431 9 4 L 9 15 C 9 16.104569 9.895431 17 11 17 L 19 17 C 20.104569 17 21 16.104569 21 15 L 21 8 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16.706 2.706 C 16.254226 2.252594 15.640058 1.99843 15 2 L 15 7 C 15 7.552285 15.447715 8 16 8 L 21 8 C 21.00157 7.359942 20.747406 6.745774 20.294 6.294 Z " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 5 7 C 3.895431 7 3 7.895431 3 9 L 3 20 C 3 21.104569 3.895431 22 5 22 L 13 22 C 13.714513 21.999982 14.374743 21.618786 14.732 21 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<g transform=" matrix(1.041667,0,0,-1.041667,213,289)">
+				<path d="M 10 5 L 3 5 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 19 L 3 19 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 14 3 L 14 7 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16 17 L 16 21 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 12 L 12 12 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 19 L 16 19 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 5 L 14 5 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 10 L 8 14 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 12 L 3 12 " style="stroke: rgb(10%,33%,55%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<path d="M 135.5,264 L 135.5,259 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<path d="M 180.5,264 L 180.5,259 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<path d="M 225.5,264 L 225.5,259 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<path d="M 135.5,259 L 225.5,259 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6;"/>
+			<polyline points="180.5 259, 180.5 255" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.6; fill: None; fill-rule: evenodd;"/>
+			<polygon points="180.5 247, 176.5 255, 184.5 255" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<polygon points="180 246, 221 214, 180 182, 139 214" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.2; fill: rgb(15%,43%,70%); fill-rule: evenodd;"/>
+			<text x="150.19650000000001" y="207" style="font-family: Helvetica-Bold; font-size: 18.5px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,414) scale(1,-1)">Router</text>
+			<polyline points="180 181, 180 178" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.6; fill: None; fill-rule: evenodd;"/>
+			<polygon points="180 169, 175.5 178, 184.5 178" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<g transform=" matrix(0.958333,0,0,-0.958333,122,167)">
+				<path d="M 12 20 L 12 22 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 2 L 12 4 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 20 L 17 22 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 2 L 17 4 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 12 L 4 12 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 17 L 4 17 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 7 L 4 7 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 12 L 22 12 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 17 L 22 17 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 7 L 22 7 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 20 L 7 22 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 2 L 7 4 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="4.0" y="4.0" width="16.0" height="16.0" rx="2.0" ry="2.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="8.0" y="8.0" width="8.0" height="8.0" rx="1.0" ry="1.0" style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<g transform=" matrix(0.958333,0,0,-0.958333,168,167)">
+				<path d="M 12 20 L 12 22 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 2 L 12 4 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 20 L 17 22 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 2 L 17 4 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 12 L 4 12 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 17 L 4 17 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 7 L 4 7 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 12 L 22 12 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 17 L 22 17 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 7 L 22 7 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 20 L 7 22 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 2 L 7 4 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="4.0" y="4.0" width="16.0" height="16.0" rx="2.0" ry="2.0" style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="8.0" y="8.0" width="8.0" height="8.0" rx="1.0" ry="1.0" style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<g transform=" matrix(0.958333,0,0,-0.958333,214,167)">
+				<path d="M 12 20 L 12 22 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 2 L 12 4 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 20 L 17 22 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 17 2 L 17 4 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 12 L 4 12 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 17 L 4 17 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 2 7 L 4 7 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 12 L 22 12 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 17 L 22 17 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 20 7 L 22 7 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 20 L 7 22 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<path d="M 7 2 L 7 4 " style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="4.0" y="4.0" width="16.0" height="16.0" rx="2.0" ry="2.0" style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+				<rect x="8.0" y="8.0" width="8.0" height="8.0" rx="1.0" ry="1.0" style="stroke: rgb(9%,45%,24%); stroke-linecap: round; stroke-width: 2.0; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="136.4565" y="127" style="font-family: Helvetica-Bold; font-size: 16.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,254) scale(1,-1)">Model pool</text>
+			<g transform=" matrix(1.125,0,0,-1.125,382.431,329.1)">
+				<path d="M 15 2 L 11 2 C 9.895431 2 9 2.895431 9 4 L 9 15 C 9 16.104569 9.895431 17 11 17 L 19 17 C 20.104569 17 21 16.104569 21 15 L 21 8 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16.706 2.706 C 16.254226 2.252594 15.640058 1.99843 15 2 L 15 7 C 15 7.552285 15.447715 8 16 8 L 21 8 C 21.00157 7.359942 20.747406 6.745774 20.294 6.294 Z " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 5 7 C 3.895431 7 3 7.895431 3 9 L 3 20 C 3 21.104569 3.895431 22 5 22 L 13 22 C 13.714513 21.999982 14.374743 21.618786 14.732 21 " style="stroke: rgb(13%,49%,43%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="419.431" y="309" style="font-family: Helvetica-Bold; font-size: 22px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,618) scale(1,-1)">Training data</text>
+			<rect x="378" y="213" width="32" height="42" rx="4" ry="4" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 385,243 L 403,243 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 385,234 L 403,234 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<text x="387.87325" y="218" style="font-family: Helvetica-Bold; font-size: 10.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,436) scale(1,-1)">T1</text>
+			<rect x="414" y="213" width="32" height="42" rx="4" ry="4" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 421,243 L 439,243 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 421,234 L 439,234 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<text x="423.87325" y="218" style="font-family: Helvetica-Bold; font-size: 10.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,436) scale(1,-1)">T2</text>
+			<rect x="450" y="213" width="32" height="42" rx="4" ry="4" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.6; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 457,243 L 475,243 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 457,234 L 475,234 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<text x="459.5845" y="218" style="font-family: Helvetica-Bold; font-size: 10.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,436) scale(1,-1)">Tn</text>
+			<polyline points="484 234, 494 234" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="502 234, 494 230, 494 238" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<polygon points="502 256, 558 256, 539 232, 539 209, 521 200, 521 232" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.0; fill: rgb(90%,95%,94%); fill-rule: evenodd;"/>
+			<text x="461.44375" y="171" style="font-family: Helvetica-Bold; font-size: 17.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,342) scale(1,-1)">Training mixture</text>
+			<g transform=" matrix(1.125,0,0,-1.125,672.768,329.1)">
+				<path d="M 10 5 L 3 5 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 12 19 L 3 19 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 14 3 L 14 7 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 16 17 L 16 21 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 12 L 12 12 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 19 L 16 19 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 21 5 L 14 5 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 10 L 8 14 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+				<path d="M 8 12 L 3 12 " style="stroke: rgb(15%,43%,70%); stroke-linecap: round; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			</g>
+			<text x="709.768" y="309" style="font-family: Helvetica-Bold; font-size: 22px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,618) scale(1,-1)">Agentic training</text>
+			<path d="M 674,262 L 674,160 Z" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 2.0;"/>
+			<circle cx="674" cy="262" r="10" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.4; fill: rgb(15%,43%,70%); fill-rule: evenodd;"/>
+			<text x="702" y="256" style="font-family: Helvetica; font-size: 18.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,512) scale(1,-1)">Agentic supervision</text>
+			<circle cx="674" cy="211" r="10" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.4; fill: rgb(15%,43%,70%); fill-rule: evenodd;"/>
+			<text x="702" y="205" style="font-family: Helvetica; font-size: 18.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,410) scale(1,-1)">Routing curriculum</text>
+			<circle cx="674" cy="160" r="10" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 1.4; fill: rgb(15%,43%,70%); fill-rule: evenodd;"/>
+			<text x="702" y="154" style="font-family: Helvetica; font-size: 18.5px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,308) scale(1,-1)">Routing-guided OPD</text>
+			<image x="1010" y="218" width="120" height="120" href="data:image/png;base64,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" transform="matrix(1,0,0,-1,0,556)"/>
+			<text x="947.094" y="170" style="font-family: Helvetica-Bold; font-size: 28px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,340) scale(1,-1)">NeoHorse-1 Model</text>
+			<polyline points="325 230, 353 230" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 3.0; fill: None; fill-rule: evenodd;"/>
+			<polygon points="365 230, 353 224, 353 236" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<polyline points="558 230, 618 230" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 3.0; fill: None; fill-rule: evenodd;"/>
+			<polygon points="630 230, 618 224, 618 236" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<polyline points="910 230, 973 230" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 3.0; fill: None; fill-rule: evenodd;"/>
+			<polygon points="985 230, 973 224, 973 236" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+			<text x="556.1" y="68" style="font-family: Helvetica-Bold; font-size: 20px;fill: rgb(9%,12%,16%); stroke:none;" transform="translate(0,136) scale(1,-1)">Next iteration</text>
+			<polyline points="1070 150, 1070 48, 180 48, 180 108" style="stroke: rgb(9%,12%,16%); stroke-linecap: round; stroke-width: 2.8; fill: None; fill-rule: evenodd;"/>
+			<polygon points="180 120, 186 108, 174 108" style="stroke: rgb(9%,12%,16%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(9%,12%,16%); fill-rule: evenodd;"/>
+		</g>
+	</g>
+</svg>

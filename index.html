@@ -38,14 +38,19 @@ Email: zhpei23@cse.cuhk.edu.hk <br />
 <a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google Scholar</a> <a href="https://github.com/JarvisPei">GitHub</a> <a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></p>
 </td></tr></table>
 <h2>Biography</h2>
-<p>I am a third-year Ph.D. candidate in the Department of Computer Science and Engineering at The Chinese University of Hong Kong, supervised by <a href="https://www.cse.cuhk.edu.hk/~byu/index.html">Prof. Bei Yu</a> and co-supervised by <a href="https://www.cse.cuhk.edu.hk/~sinnopan/">Prof. Sinno Jialin Pan</a>. My research focuses on <b>large language models</b>, especially <b>LLM agents</b>, <b>long-context fine-tuning</b>, <b>efficient LLM adaptation</b>, and <b>model compression</b>. My recent work studies how to improve LLM capability, efficiency, and reliability across agentic systems, code generation, and resource-constrained deployment.</p>
+<p>I am a fourth-year Ph.D. candidate in the Department of Computer Science and Engineering at The Chinese University of Hong Kong, supervised by <a href="https://www.cse.cuhk.edu.hk/~byu/index.html">Prof. Bei Yu</a> and co-supervised by <a href="https://www.cse.cuhk.edu.hk/~sinnopan/">Prof. Sinno Jialin Pan</a>. My research focuses on <b>large language models</b>, especially <b>LLM agents and agentic post-training</b>, <b>long-context fine-tuning</b>, <b>efficient LLM adaptation</b>, and <b>model compression</b>. My recent work studies how to improve LLM capability, efficiency, and reliability across agentic systems, code generation, and resource-constrained deployment.</p>
 <p>I received my B.S. degree in Mathematics from The Chinese University of Hong Kong in 2022. I previously completed a research internship at Huawei Noah's Ark Lab / Foundation Model Department, where I worked on long-context LLM fine-tuning, LLM agents, and efficient MoE deployment.</p>
+<p>At <a href="https://huggingface.co/TokenRhythm">TokenRhythm</a>, I led the <b>agentic post-training</b> of <a href="https://github.com/TokenRhythm/NeoHorse">NeoHorse-1</a>, an open-weight 4B/9B model family for agent workflows. I also developed <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B">NeoHorse-Jev-4B</a>, a prefill-only model that returns structured decisions and probabilities for application-defined questions.</p>
 <p>I will be in San Francisco for COLM 2026 this October and am currently looking for job opportunities.</p>
 <p>I welcome discussions and collaborations with researchers and practitioners interested in LLM agents, long-context learning, efficient LLMs, and AI for code.</p>
 <h2>Recent News</h2>
 <div class="infoblock">
 <div class="blockcontent">
 <ul>
+<li><p>Sep/2026: We released <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B"><b>NeoHorse-Jev-4B</b></a>, an open-weight structured decision model for agent workflows.</p>
+</li>
+<li><p>Sep/2026: We released <a href="https://github.com/TokenRhythm/NeoHorse"><b>NeoHorse-1</b></a> in 4B and 9B sizes. The <a href="https://arxiv.org/abs/2609.08183">technical report</a> describes our routing-guided agentic post-training framework.</p>
+</li>
 <li><p>Sep/2026: <b>MemDLM</b> is accepted by <b>NeurIPS 2026</b>.</p>
 </li>
 <li><p>Jul/2026: <b>PreMoE</b> is accepted by <b>COLM 2026</b>.</p>
@@ -67,7 +72,7 @@ Email: zhpei23@cse.cuhk.edu.hk <br />
 <h2>Research Interests</h2>
 <p>My research interests include:</p>
 <ul>
-<li><p><b>LLM Agents</b>: prompt evolution, context management, agent reliability.</p>
+<li><p><b>LLM Agents</b>: agentic post-training, structured decision models, prompt evolution, context management, agent reliability.</p>
 </li>
 <li><p><b>Long-Context LLMs</b>: long-context fine-tuning, attention dilution, parametric memory.</p>
 </li>
@@ -79,6 +84,14 @@ Email: zhpei23@cse.cuhk.edu.hk <br />
 <h2>Selected Research Directions</h2>
 <h3>LLMs, Agents, and Long-Context Learning</h3>
 <p>Modern LLM systems are increasingly agentic and context-heavy. My work in this direction studies how models and agents can <b>learn to use context</b>, rather than merely receive longer inputs.</p>
+<div class="paper-card">
+  <div class="paper-figure"><a href="figures/NeoHorse.svg" target="_blank" rel="noopener noreferrer" aria-label="View the NeoHorse framework at full size"><img src="figures/NeoHorse.svg" alt="NeoHorse framework: routing harness, agentic training, and capability feedback" width="1200" height="500" style="height: auto;" /></a></div>
+  <div class="paper-text">
+    <p><strong>NeoHorse: Open Models for Agent Workflows.</strong> 2026. (<a href="https://arxiv.org/abs/2609.08183">Technical Report</a>) (<a href="https://github.com/TokenRhythm/NeoHorse">GitHub</a>) (<a href="software.html#neohorse">Models</a>)</p>
+    <p><strong>NeoHorse-1</strong> provides 4B and 9B language models for tool use, coding, and instruction following. <strong>NeoHorse-Jev-4B</strong> extends the family with prefill-only structured decisions for routing, tool selection, and workflow control.</p>
+    <p class="paper-keywords">Keywords: agentic post-training; routing-guided learning; structured decisions.</p>
+  </div>
+</div>
 <div class="paper-card">
   <div class="paper-figure"><img src="figures/SCOPE.png" alt="SCOPE overview" /></div>
   <div class="paper-text">
