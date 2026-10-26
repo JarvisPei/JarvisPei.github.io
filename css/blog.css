@@ -215,6 +215,10 @@
   height: auto;
 }
 
+.figure-responsive a {
+  min-width: 0;
+}
+
 .blog-article figcaption {
   margin-top: 0.65rem;
   color: #4a535e;

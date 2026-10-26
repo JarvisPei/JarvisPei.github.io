@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+  <title id="title">One semantic judgment can have different consequences</title>
+  <desc id="desc">The same model estimate that evidence is sufficient can set review priority or end a task. A wrong estimate can misplace review attention or leave work unfinished, depending on application policy. Advising a reviewer is not automatically useful or harmless.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="960" height="440" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <g text-anchor="middle" font-size="19" font-weight="700">
+      <text x="147" y="45">Model estimate</text>
+      <text x="485" y="45">Application policy</text>
+      <text x="797" y="45">If the judgment is wrong</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2">
+      <rect x="35" y="180" width="225" height="90" rx="8" fill="#fff0e4" />
+      <rect x="365" y="90" width="240" height="92" rx="8" fill="#eaf0f9" />
+      <rect x="365" y="265" width="240" height="92" rx="8" fill="#f0f2f5" />
+    </g>
+    <g text-anchor="middle" font-size="22" font-weight="700">
+      <text x="147" y="215">“Evidence is</text><text x="147" y="245">sufficient”</text>
+      <text x="485" y="126">Set review</text><text x="485" y="156">priority</text>
+      <text x="485" y="301">End the</text><text x="485" y="331">task</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2.3" fill="none">
+      <path d="M272 225H310" />
+      <path d="M310 136V311" />
+      <path d="M310 136H352" marker-end="url(#arrow)" />
+      <path d="M310 311H352" marker-end="url(#arrow)" />
+      <path d="M617 136H667" marker-end="url(#arrow)" />
+      <path d="M617 311H667" marker-end="url(#arrow)" />
+    </g>
+    <circle cx="310" cy="225" r="3.5" fill="#20252b" />
+    <g stroke="#20252b" stroke-width="2" fill="none">
+      <circle cx="702" cy="136" r="21" /><circle cx="702" cy="136" r="10" />
+      <path d="M712 111L730 129M730 111L712 129" />
+      <rect x="682" y="284" width="41" height="55" rx="4" />
+      <path d="M692 298H714M692 310H714M692 322H704" />
+      <circle cx="722" cy="335" r="11" fill="#fff" />
+      <path d="M722 328V336M722 340V342" />
+    </g>
+    <g font-size="22">
+      <text x="752" y="127">Misplaced</text><text x="752" y="157">attention</text>
+      <text x="752" y="302">Unfinished</text><text x="752" y="332">work</text>
+    </g>
+    <path d="M35 390H925" stroke="#d8dce2" stroke-width="1.5" />
+    <text x="480" y="421" text-anchor="middle" font-size="20" font-weight="700">The policy determines the cost of an error.</text>
+  </g>
+</svg>

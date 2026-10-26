@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="650" viewBox="0 0 520 650" role="img" aria-labelledby="title desc">
+  <title id="title">One judgment, different consequences</title>
+  <desc id="desc">The same estimate of sufficient evidence can set review priority or end a task. If wrong, it can misplace attention or leave work unfinished. The policy determines the error's consequences.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="520" height="650" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <text x="260" y="30" text-anchor="middle" font-size="19" font-weight="700">Model estimate</text>
+    <g stroke="#20252b" stroke-width="2">
+      <rect x="130" y="55" width="260" height="80" rx="8" fill="#fff0e4" />
+      <rect x="35" y="220" width="210" height="100" rx="8" fill="#eaf0f9" />
+      <rect x="275" y="220" width="210" height="100" rx="8" fill="#f0f2f5" />
+    </g>
+    <g text-anchor="middle" font-size="23" font-weight="700">
+      <text x="260" y="88">“Evidence is</text><text x="260" y="117">sufficient”</text>
+      <text x="140" y="263">Set review</text><text x="140" y="293">priority</text>
+      <text x="380" y="263">End the</text><text x="380" y="293">task</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2.3" fill="none">
+      <path d="M260 147V180" />
+      <path d="M260 180H140V207" marker-end="url(#arrow)" />
+      <path d="M260 180H380V207" marker-end="url(#arrow)" />
+      <path d="M140 332V407" marker-end="url(#arrow)" />
+      <path d="M380 332V407" marker-end="url(#arrow)" />
+    </g>
+    <circle cx="260" cy="180" r="3.5" />
+    <text x="260" y="376" text-anchor="middle" font-size="19" font-weight="700">If wrong</text>
+    <g stroke="#20252b" stroke-width="2" fill="none">
+      <circle cx="140" cy="450" r="21" /><circle cx="140" cy="450" r="10" />
+      <path d="M150 425L168 443M168 425L150 443" />
+      <rect x="360" y="425" width="41" height="50" rx="4" />
+      <path d="M370 438H392M370 450H392M370 462H382" />
+      <circle cx="400" cy="473" r="11" fill="#fff" />
+      <path d="M400 466V474M400 478V480" />
+    </g>
+    <g text-anchor="middle" font-size="23">
+      <text x="140" y="512">Misplaced</text><text x="140" y="542">attention</text>
+      <text x="380" y="512">Unfinished</text><text x="380" y="542">work</text>
+    </g>
+    <path d="M35 575H485" stroke="#d8dce2" stroke-width="1.5" />
+    <g text-anchor="middle" font-size="21" font-weight="700">
+      <text x="260" y="608">The policy determines</text><text x="260" y="635">the cost of an error.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="650" viewBox="0 0 520 650" role="img" aria-labelledby="title desc">
+  <title id="title">Count the whole intervention</title>
+  <desc id="desc">Every request first incurs a decision call. The shortcut uses its answer; the fallback also calls the main LLM. Both lead to task outcomes. Repair or recheck, when needed, returns to the observed state and adds work.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker></defs>
+  <rect width="520" height="650" fill="#fff" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <g stroke="#20252b" stroke-width="2">
+      <rect x="150" y="25" width="220" height="80" rx="8" fill="#eaf0f9" />
+      <rect x="170" y="150" width="180" height="70" rx="8" fill="#fff0e4" />
+      <rect x="35" y="320" width="210" height="80" rx="8" fill="#f0f2f5" />
+      <rect x="275" y="320" width="210" height="80" rx="8" fill="#eaf0f9" />
+      <rect x="170" y="460" width="180" height="80" rx="8" fill="#fff" />
+    </g>
+    <g text-anchor="middle" font-size="23" font-weight="700">
+      <text x="260" y="58">Request +</text><text x="260" y="87">evidence</text>
+      <text x="260" y="194">Decision</text>
+      <text x="140" y="368">Use decision</text>
+      <text x="380" y="368">Main LLM</text>
+      <text x="260" y="493">Task</text><text x="260" y="523">outcome</text>
+    </g>
+    <g stroke="#20252b" stroke-width="2.3" fill="none">
+      <path d="M260 117V137" marker-end="url(#arrow)" />
+      <path d="M260 232V270" />
+      <path d="M260 270H140V307" marker-end="url(#arrow)" />
+      <path d="M260 270H380V307" marker-end="url(#arrow)" />
+      <path d="M140 412V430H380V412" />
+      <path d="M260 430V447" marker-end="url(#arrow)" />
+    </g>
+    <circle cx="260" cy="270" r="3.5" /><circle cx="260" cy="430" r="3.5" />
+    <g text-anchor="middle" font-size="20">
+      <text x="140" y="253">Shortcut</text><text x="380" y="253">Fallback</text>
+    </g>
+    <path d="M362 500H500V625H20V65H138" stroke="#20252b" stroke-width="2.1" stroke-dasharray="6 5" fill="none" marker-end="url(#arrow)" />
+    <text x="260" y="610" text-anchor="middle" font-size="20">Repair / recheck, if needed</text>
+  </g>
+</svg>

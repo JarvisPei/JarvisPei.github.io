@@ -44,7 +44,7 @@
   </script>
   <link rel="stylesheet" href="../jemdoc.css" />
   <link rel="stylesheet" href="../css/myMiddle.css" />
-  <link rel="stylesheet" href="../css/blog.css?v=20261026" />
+  <link rel="stylesheet" href="../css/blog.css?v=20261026-figures" />
   <link rel="shortcut icon" href="../cuhk_logo.png" />
   <script src="../profile-links.js" defer></script>
   <title>Fast Decisions, Useful Agents — Zehua Pei</title>
@@ -89,6 +89,10 @@
       <p>Checking exact contents, permissions, or whether a command actually ran belongs in code. A model can help interpret “relevant” or “sufficient,” but should not replace an available exact check merely because both can be phrased as yes-or-no questions.</p>
       <p>Recognizing a condition and enforcing it are different jobs, too. A model may identify a forbidden operation while the acting agent still performs it. The host must enforce permissions and limits.</p>
       <p>The decision API makes a judgment explicit. The surrounding program still decides what it can authorize.</p>
+      <figure id="decision-policy">
+        <div class="figure-scroll figure-responsive"><a href="../figures/blog/jev-decision-policy.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the decision-policy diagram at full size"><picture><source media="(max-width: 600px)" srcset="../figures/blog/jev-decision-policy-mobile.svg" width="520" height="650" /><img src="../figures/blog/jev-decision-policy.svg" width="960" height="440" loading="lazy" alt="The same estimate that evidence is sufficient can set review priority or end a task. A wrong estimate can misplace attention or leave work unfinished, depending on the policy." /></picture></a></div>
+        <figcaption><span class="figure-help">Tap the diagram to open it at full size.</span><strong>One judgment, different consequences.</strong> The policy determines what an error changes. Advising a reviewer still needs to improve how attention is allocated; it is not automatically useful or harmless.</figcaption>
+      </figure>
       </section>
       <section aria-labelledby="question-contract"><h2 id="question-contract">2. A probability needs a question with a complete meaning</h2>
       <p>A decision interface encourages short questions. That can hide a surprisingly large amount of specification.</p>
@@ -101,6 +105,10 @@
       </section>
       <section aria-labelledby="saved-work"><h2 id="saved-work">3. Count the work after the decision</h2>
       <p>We tested a cascade: a decision model could directly accept sufficiently high-scoring source support; otherwise, the request went to the main LLM.</p>
+      <figure id="decision-workflow">
+        <div class="figure-scroll figure-responsive"><a href="../figures/blog/jev-decision-workflow.svg" target="_blank" rel="noopener noreferrer" aria-label="Open the shortcut and fallback workflow at full size"><picture><source media="(max-width: 600px)" srcset="../figures/blog/jev-decision-workflow-mobile.svg" width="520" height="650" /><img src="../figures/blog/jev-decision-workflow.svg" width="960" height="430" loading="lazy" alt="Every request incurs a decision call. A shortcut uses its answer; a fallback also calls the main LLM. Both produce task outcomes, and any repair or recheck adds to the total work." /></picture></a></div>
+        <figcaption><span class="figure-help">Tap the diagram to open it at full size.</span><strong>Count the whole intervention.</strong> Only the shortcut avoids the main-model call; the fallback pays for both. Any repair also belongs in the total. Paths are schematic, not measured durations.</figcaption>
+      </figure>
       <p>This arrangement can save work. In three short repeated runs on the same 48 claim–source pairs, it reduced main-model calls from 48 to 33 per run. Pooled mean latency fell by about 18%. But total network requests rose from 48 to 81 per run, the 95th-percentile latency was worse in every run, and one round had more unresolved fallback timeouts.</p>
       <p>Every request pays for the decision call. Only the shortcut subset avoids the main-model call. The rest pay for both. A favorable average does not mean the slower requests improve, and fewer main-model calls do not establish a lower total bill.</p>
       <p>We also connected the cascade to an actual retrieval loop: search a corpus, inspect abstracts, refine the search, and submit a verdict with a source. It made fewer main-model calls and had a lower observed mean runtime. It also introduced a clear semantic error that the ordinary agent avoided. Our initial aggregate score obscured the difference because some other failures concerned explanation length. Separating substantive correctness from that formatting requirement exposed the tradeoff.</p>
