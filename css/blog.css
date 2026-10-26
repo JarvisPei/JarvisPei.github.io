@@ -96,6 +96,39 @@
   font-size: 0.94rem;
 }
 
+.language-switch {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: fit-content;
+  margin: -0.6rem 0 1.2rem;
+  font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.9rem;
+}
+
+.language-switch [aria-current="page"] {
+  color: #20252b;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+html[lang="zh-CN"] .blog-article,
+html[lang="zh-CN"] .article-header {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html[lang="zh-CN"] .blog-article p,
+html[lang="zh-CN"] .blog-article li {
+  line-height: 1.9;
+}
+
+html[lang="zh-CN"] .article-header h1 {
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
 .article-header h1 {
   margin: 0.6rem 0 1rem;
   padding: 0;

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Zehua Pei" />
+  <meta name="description" content="把 NeoHorse-Jev 接入 Agent 工作流之后：完成判断、问题定义、速度与质量的权衡、定制化，以及一次决策之后的全部工作。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="快速决策，怎样让 Agent 更有用" />
+  <meta property="og:description" content="把 NeoHorse-Jev 放进循环之后，我们学到了什么。" />
+  <meta property="og:url" content="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html" />
+  <meta property="og:image" content="https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="快速决策，怎样让 Agent 更有用：判断经由应用策略，影响最终交付。" />
+  <meta property="article:published_time" content="2026-10-26" />
+  <meta property="article:modified_time" content="2026-10-26" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="快速决策，怎样让 Agent 更有用" />
+  <meta name="twitter:description" content="把 NeoHorse-Jev 放进循环之后，我们学到了什么。" />
+  <meta name="twitter:image" content="https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png" />
+  <meta name="twitter:image:alt" content="快速决策，怎样让 Agent 更有用：把 NeoHorse-Jev 放进循环之后的经验。" />
+  <link rel="canonical" href="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html" />
+  <link rel="alternate" hreflang="en" href="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html" />
+  <link rel="alternate" hreflang="zh-CN" href="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html#article",
+    "headline": "快速决策，怎样让 Agent 更有用",
+    "description": "把 NeoHorse-Jev 接入 Agent 工作流之后：完成判断、问题定义、速度与质量的权衡、定制化，以及一次决策之后的全部工作。",
+    "url": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html",
+    "mainEntityOfPage": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents-zh.html",
+    "image": "https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png",
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26",
+    "inLanguage": "zh-CN",
+    "translationOfWork": {"@type": "BlogPosting", "@id": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html#article", "inLanguage": "en"},
+    "author": {"@type": "Person", "@id": "https://jarvispei.github.io/#person", "name": "Zehua Pei", "url": "https://jarvispei.github.io/"}
+  }
+  </script>
+  <link rel="stylesheet" href="../jemdoc.css" />
+  <link rel="stylesheet" href="../css/myMiddle.css" />
+  <link rel="stylesheet" href="../css/blog.css?v=20261026-bilingual" />
+  <link rel="shortcut icon" href="../cuhk_logo.png" />
+  <script src="../profile-links.js" defer></script>
+  <title>快速决策，怎样让 Agent 更有用 — Zehua Pei</title>
+</head>
+<body class="blog-page">
+<a class="skip-link" href="#layout-content">跳到正文</a>
+<div class="blog-shell">
+  <nav id="layout-menu" aria-label="主导航">
+    <div class="menu-category">Zehua Pei</div>
+    <div class="page-links">
+      <div class="menu-item"><a href="../index.html">主页</a></div>
+      <div class="menu-item"><a href="../publications.html">论文</a></div>
+      <div class="menu-item"><a href="../software.html">软件与模型</a></div>
+      <div class="menu-item"><a href="../blog.html" class="current" aria-current="page">博客</a></div>
+    </div>
+    <div class="profile-menu">
+      <div class="menu-category">个人链接</div>
+      <div class="menu-item"><a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google&nbsp;Scholar</a></div>
+      <div class="menu-item"><a href="https://github.com/JarvisPei">GitHub</a></div>
+      <div class="menu-item"><a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></div>
+    </div>
+  </nav>
+  <main id="layout-content">
+    <header class="article-header">
+      <a class="back-link" href="../blog.html">← 全部文章</a>
+      <nav class="language-switch" aria-label="文章语言"><a href="jev-fast-decisions-useful-agents.html" lang="en" hreflang="en">English</a><span aria-hidden="true"> / </span><a href="jev-fast-decisions-useful-agents-zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a></nav>
+      <p class="post-meta"><time datetime="2026-10-26">2026 年 10 月 26 日</time> · Jev 实践笔记，第二篇</p>
+      <h1>快速决策，怎样让 Agent 更有用</h1>
+      <p class="subtitle">把 NeoHorse-Jev 放进循环之后，我们学到了什么。</p>
+      <p class="post-meta">Zehua Pei · 与 NeoHorse Team 共同开展实验</p>
+    </header>
+    <article class="blog-article">
+      <p class="lead">在上一篇<a href="jev-agent-control-plane-zh.html">《Jev 在 Agent 循环中适合做什么》</a>中，我把决策模型描述为可编程的语义算子：一些小组件，回答软件难以用规则解决的问题。这段文字相关吗？这个请求该交给哪个工作单元？当前证据足以继续了吗？</p>
+      <p>接口接收观测到的状态和一组带类型的问题，返回代码可以使用的选项或分数。它吸引人的地方在于，让语义判断变得可调用，而不必让生成模型再写一份答案和解释。</p>
+      <p>这个接口仍然很有吸引力。在构建 NeoHorse-Jev 时，我们发现模型能快速返回带类型的决策，专项化也能改善一项狭窄的能力。接下来的问题是，这些特性是否会让 Agent 更有用。</p>
+      <p>于是，我们从孤立判断转向实际干预：让一次决策停止工具循环、跳过验证调用，或者生成一组主题标签。有用的决策组件必须改善它周围的工作。自身响应有多快，只是其中一部分。</p>
+      <p>当一个 Agent 因为漏做了一件事而更快结束时，这种区别变得尤其清楚。</p>
+      <details class="article-toc" open><summary>本文目录</summary><ol>
+        <li><a href="#completion">完成判断不只是标签，它会产生后果</a></li><li><a href="#question-contract">概率需要一个含义完整的问题</a></li><li><a href="#saved-work">把决策之后的工作也算进去</a></li><li><a href="#speed-quality">速度与质量之间确实存在权衡</a></li><li><a href="#specialization">专项化需要明确的工作范围</a></li><li><a href="#community">社区证据指向哪里</a></li><li><a href="#takeaways">再加一个决策模型前，我会问什么</a></li>
+      </ol></details>
+      <section aria-labelledby="completion"><h2 id="completion">1. 完成判断不只是标签，它会产生后果</h2>
+        <p>设想一个涉及多个文件的请求：保留其中一个，移动另一个，删除过期目录，并确保保留的内容一致。从 API 看，“全部完成了吗？”是一个简短的问题，但回答它，需要逐项核对所有要求。</p>
+        <p>把请求拆成核查清单有帮助，但普通主模型基线也因此受益。最初看起来像是增加决策模型带来的部分提升，实际来自把任务和证据说清楚了。</p>
+        <p>随后，我们保持某项要求的事实不变，只改变其他事项的进度。有些局部判断会随这些无关进度发生变化。缩小证据视图，修正了若干已经观察到的错误。但在后来的一个可执行反例里，模型高置信地把内容不同的文件判成一致。控制器据此结束了任务，而精确的程序检查拒绝了这个结论。</p>
+        <p>精确内容、权限，以及某条命令是否真正执行，都应该由代码检查。模型可以帮助理解“相关”或“充分”，但不能仅仅因为两者都能被表述成是非题，就用它替换已经可用的精确检查。</p>
+        <p>识别条件和强制执行条件，也是两件事。模型可能指出某个操作被禁止，行动中的 Agent 却仍然执行。权限和限制必须由宿主程序落实。</p>
+        <p>决策 API 把判断显式化，但周围的程序仍要决定，这个判断能授权什么。</p>
+        <figure id="decision-policy"><div class="figure-scroll figure-responsive"><a href="../figures/blog/jev-decision-policy.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的决策策略示意图"><picture><source media="(max-width: 600px)" srcset="../figures/blog/jev-decision-policy-mobile.svg" width="520" height="650" /><img src="../figures/blog/jev-decision-policy.svg" width="960" height="440" loading="lazy" alt="同一个证据充分性判断，既可以用于安排复核优先级，也可以用于结束任务；错误后果取决于消费它的策略。" /></picture></a></div><figcaption><span class="figure-help">点击可打开完整图片。</span><strong>同一个判断，不同的后果。</strong>策略决定错误会改变什么。为复核提供建议，也需要改善注意力分配；它并非天然有用或无害。</figcaption></figure>
+      </section>
+      <section aria-labelledby="question-contract"><h2 id="question-contract">2. 概率需要一个含义完整的问题</h2>
+        <p>决策接口鼓励简短提问，但简短问题可能藏着出乎意料的大量定义。</p>
+        <p>在多标签消息实验里，我们判断消息是否属于援助、基础设施、天气等类别。每组还有一个“其他”类别。“其他援助”只有相对于已经列出的援助类别才有意义。如果这些定义放在别处，独立评估的一个问题就可能没有足够的信息来区分它们。</p>
+        <p>我们的定义恰好存在这个问题：一些剩余类别的问题提到了其他类别，却没有列出它们。普通 LLM 得到了完整分类体系，决策问题却不能独立理解。这是输入约定的问题，也说明不能把全部质量差距都归因于模型能力。</p>
+        <p>把定义写长，并不是通用解法。在一个小型开发对比中，显式列出类别修正了若干预期中的区分，却也引入了更多无关的正例。说明更完整，并不意味着预测就更好。</p>
+        <p>应用必须提供理解每个问题所需的信息，模型则必须正确使用它。增加文字解决的是前一项责任，不会自动履行后一项。</p>
+        <p>对置信度也是如此。在一个来源核查任务里，摘要说恢复某种生物机制会改善再生，模型却认可了“恢复该机制会损害再生”的主张，支持分数约为 0.96。后续留出的来源核查里，又出现了明确的高置信方向错误。在独立校准数据上选择阈值，改变了走捷径的覆盖率，却没有消除这个语义错误。</p>
+        <p>因此，实际问题不只是分数高不高，而是这个策略在这类决策上会产生多高的错误率，以及错了之后会怎样。</p>
+      </section>
+      <section aria-labelledby="saved-work"><h2 id="saved-work">3. 把决策之后的工作也算进去</h2>
+        <p>我们测试了一种级联：决策模型可以直接接受支持分数足够高的来源判断；否则，请求交给主 LLM。</p>
+        <figure id="decision-workflow"><div class="figure-scroll figure-responsive"><a href="../figures/blog/jev-decision-workflow.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的捷径与回退工作流示意图"><picture><source media="(max-width: 600px)" srcset="../figures/blog/jev-decision-workflow-mobile.svg" width="520" height="650" /><img src="../figures/blog/jev-decision-workflow.svg" width="960" height="430" loading="lazy" alt="每个请求先调用决策模型；捷径直接使用其答案，回退则额外调用主 LLM；修复或复查也属于总工作量。" /></picture></a></div><figcaption><span class="figure-help">点击可打开完整图片。</span><strong>计算整个干预。</strong>只有走捷径的请求省去了主模型调用，回退请求要付两次成本。修复也必须计入。路径仅为示意，不代表实测时长。</figcaption></figure>
+        <p>这种安排可以省下一些工作。在同一批 48 组主张与来源配对上的三轮短期重复测试中，每轮主模型调用从 48 次减至 33 次，合并后的平均延迟下降约 18%。但每轮网络请求总数从 48 次增加到了 81 次，三轮的第 95 百分位延迟都更差，其中一轮还有更多回退请求超时未解决。</p>
+        <p>每个请求都要付出决策调用的成本，只有走捷径的那部分省去主模型调用，其余请求两者都要付。平均值改善，不代表慢请求也改善；主模型调用减少，也不能证明总账单更低。</p>
+        <p>我们还把级联接到真实的检索循环中：搜索语料、检查摘要、调整搜索，再提交带来源的结论。它减少了主模型调用，观测到的平均运行时间也更低，但引入了一个普通 Agent 没有犯的明确语义错误。最初的汇总分数掩盖了这个差异，因为其他一些失败来自解释长度要求。把实质正确性与格式要求分开后，才看清这个权衡。</p>
+        <p>有用的单位是一次完成的结果。因此，判断、回退、额外搜索、重试和修复，都要算进去；答错了，与根本没有返回答案，也要分开看。</p>
+        <p>这不是要求零错误。可以恢复的额外检索，与错误的最终批准，代价并不相同。组件有没有帮助，取决于它引入哪种错误，又省掉哪些工作。</p>
+      </section>
+      <section aria-labelledby="speed-quality"><h2 id="speed-quality">4. 速度与质量之间确实存在权衡</h2>
+        <p>接着，我们尝试了一种天然需要多次判断的工作负载：对公开 <a href="https://github.com/rmunro/disaster_response_messages">Disaster Response Messages 数据集</a>中的历史消息分配主题。类别来自已有的消息编码任务；我们没有为了显出批处理的好处而人为增加问题。</p>
+        <p>普通 LLM 一次返回简洁的正标签列表。NeoHorse-Jev-4B 服务则通过三次串行请求回答 35 个带类型的问题，因为部署接口每次最多接受 16 个问题。三次请求全部计入延迟。</p>
+        <p>在一批新的 96 条消息确认实验中，结果如下：</p>
+        <div class="table-scroll"><table class="service-comparison"><caption>96 条新消息上的服务速度与质量</caption><thead><tr><th scope="col">指标</th><th scope="col" class="numeric">普通 LLM</th><th scope="col" class="numeric">NeoHorse-Jev-4B</th></tr></thead><tbody>
+          <tr><th scope="row">每条消息平均耗时</th><td class="numeric">1.80 s</td><td class="numeric">0.48 s</td></tr>
+          <tr><th scope="row">二元主题 micro F1</th><td class="numeric">60.49%</td><td class="numeric">48.65%</td></tr>
+          <tr><th scope="row">多标的正标签数</th><td class="numeric">128</td><td class="numeric">237</td></tr>
+          <tr><th scope="row">漏掉的正标签数</th><td class="numeric">64</td><td class="numeric">67</td></tr>
+        </tbody></table></div>
+        <p>这里比较的是两个托管服务：一个服务商声明为 Haiku 4.5 的接口，以及我们的 4B 决策模型。这个比较不能单独识别架构或硬件的影响。前述输入定义问题，以及历史标注的局限，也仍然相关。这是离线标签评测，不是真实应急调度，也不是复核人员生产力测试。</p>
+        <p>更快的服务在相近召回率下，多标了明显更多的标签。如果每个标签都会生成一条待处理事项，增加的复核工作可能比推理省下一秒更重要。如果标签只是低成本的建议，权衡又可能不同。这要由工作负载决定，不能只靠 F1 或延迟下结论。</p>
+        <p>其中一项改善来自普通软件。我们要求三个剩余类别的标签，都必须有对应的预测父类。例如，“其他天气”必须同时预测为“天气相关”。在新一批数据之前，我们固定了这条规则，并将其应用于两个模型未经修改的输出。</p>
+        <p>对 Jev，多标数从 237 降至 216，micro F1 从 48.65% 升至 50.44%，漏标数仍为 67。同一规则也从普通 LLM 的结果中移除了四个多余标签，没有增加任何模型调用。</p>
+        <p>这个小幅改善在新消息上得到了重复验证。它没有修复模型理解，也没有填平质量差距；父类预测错了，仍可能压掉一个有效标签。它的价值在于把应用约束显式化，而不是每次都让模型自己推断。</p>
+      </section>
+      <section aria-labelledby="specialization"><h2 id="specialization">5. 专项化需要明确的工作范围</h2>
+        <p>此前的受控实验表明，适配表单操作任务可以改善完成率，专项化也能改善一小类约束判断。这些仍然是值得关注定制化的原因。</p>
+        <p>但实验也说明了专项模型为什么需要定义工作范围。一次约束适配后，通用决策子集上的准确率变化不大，概率质量指标却变差了。即使多数首选答案不变，依赖分数的策略也可能发生变化。</p>
+        <p>我会区分三类错配：证据缺失，问题或验收标准有误，以及模型缺少应用需要的语义能力。训练能应对第三类，却不能补出运行时从未看到的证据，也不能落实软件忽略的权限规则。</p>
+        <p>当一种反复出现的决策有稳定的含义、反馈，以及在应用中的明确位置时，定制化才最有用。专项模型不必成为更好的通用助手，但必须把分配给它的任务做得更好。</p>
+      </section>
+      <section aria-labelledby="community"><h2 id="community">6. 社区证据指向哪里</h2>
+        <p>一些近期报告，比快速分类演示更接近系统层面的问题。</p>
+        <p><a href="https://github.com/MongLong0214/jev-gate/tree/main/bench/results/long-session-pilot-2026-10-12">Jev Gate 的长会话试验</a>，用成对的 17 轮编码会话重建私有代码库中的两个真实功能。作者报告，总成本从约 $42.81 降至 $19.65，合并质量分数同为 21/23；两个任务各自在不同方向上有小幅质量优势。插件同时结合了工作单元委派、模型选择和上下文压缩，每个任务只有一对运行。这是调整长会话工作分配方式的积极线索，并非对决策模型独立贡献的测量。</p>
+        <p>其他报告则说明，替代方案很重要。在 <a href="https://llmgateway.io/blog/smart-routing-benchmark">LLM Gateway 的路由试验</a>中，路由比固定高价模型便宜，但固定中价模型更便宜，且通过的任务略多。<a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev 的验证记录</a>展示了显著的上下文缩减，但在一个小型成对 fixture 测试中，本地检索优于托管的 Jev 辅助检索。更好的分配和检索可以带来帮助，不意味着每个分支都需要一个决策模型。</p>
+        <p>一项更广泛的 <a href="https://arxiv.org/abs/2610.13092">Jev 在 Agent 工作流中的研究</a>，在具身和移动端任务上发现了相近现象：决策层面的节省，不会一致地转化为成功交付，恢复过程和过早完成都会影响结果。这些是其他研究者的系统和模型，不是 NeoHorse-Jev 的测量；但它们都提醒我们，要一路追踪决策直到最终后果。</p>
+        <p>共同值得追求的，是反复出现、有边界、结果可观测的工作。只有相对于合理替代方案——规则、固定模型、本地检索或另一种分工方式——改善了结果，组件才真正有了位置。</p>
+      </section>
+      <section aria-labelledby="takeaways"><h2 id="takeaways">再加一个决策模型前，我会问什么</h2>
+        <p>我仍然喜欢常驻语义组件的想法。让判断可调用，可以暴露原本埋在长篇模型回复中的问题，也为专项化、错误检查，以及独立于生成过程调整策略，提供了一个明确的位置。</p>
+        <p>现在，我会从应用而不是接口出发：</p>
+        <ul><li>工作流本来就需要哪种反复出现的决策？</li><li>组件能看到足够的信息来回答吗？</li><li>它的答案会改变什么，错误代价是什么？</li><li>相对于最简单而可信的替代方案，完整工作流改善了吗？</li></ul>
+        <p>“仅供建议”并不能自动回答第三个问题。我们试过给真实代码修复轨迹排序，以安排复核，却没有找到有用的失败优先级信号。即便只是建议，也需要帮助人决定把注意力放在哪里。</p>
+        <p>我们暂停了这一轮，而不是继续寻找一个好看的小结果。这些实验留下了实现经验和有边界的正向信号，但对当前部署模型，我们还没有找到可以推荐为稳定收益的工作流。</p>
+        <div class="thesis"><p>我最初把决策模型视为语义算子的看法没有改变。新增的要求是：算子必须证明自己在程序里值得存在。快速答案有用，是因为它帮助系统交付更好的工作、花更少的精力，或者更早恢复，而不只是比生成模型更早返回。</p></div>
+      </section>
+      <section aria-labelledby="sources"><h2 id="sources">来源与实验范围</h2>
+        <p class="note">本地观察来自我们的 NeoHorse-Jev 探索及部署服务复核，包括构造诊断、公开记录选样、重复服务运行和小型可执行循环；它们不是官方完整 benchmark 分数，也不是生产流量。来源核查使用 <a href="https://github.com/allenai/scifact">SciFact</a>，复核排序使用归档的 <a href="https://github.com/SWE-bench/experiments">SWE-bench 实验</a>。灾害消息数据来源：Robert Munro，<a href="https://purl.stanford.edu/cg721hb0673">Processing short message communications in low-resource languages</a>，斯坦福大学，2012 年，以 CC BY 4.0 分发。</p>
+        <p class="note">社区结果在相应位置注明了作者。我们自己的结果针对 NeoHorse-Jev 和实际测试的服务，不代表 TypeSafe 的专有模型，也不代表该接口的所有实现。</p>
+      </section>
+    </article>
+    <footer class="blog-footer">
+      <p>上一篇：<a href="jev-agent-control-plane-zh.html">Jev 在 Agent 循环中适合做什么</a></p>
+      <p><a href="https://twitter.com/intent/tweet?text=%E5%BF%AB%E9%80%9F%E5%86%B3%E7%AD%96%EF%BC%8C%E6%80%8E%E6%A0%B7%E8%AE%A9%20Agent%20%E6%9B%B4%E6%9C%89%E7%94%A8&amp;url=https%3A%2F%2Fjarvispei.github.io%2Fblog%2Fjev-fast-decisions-useful-agents-zh.html" target="_blank" rel="noopener noreferrer">分享到 X</a> · <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjarvispei.github.io%2Fblog%2Fjev-fast-decisions-useful-agents-zh.html" target="_blank" rel="noopener noreferrer">分享到 LinkedIn</a></p>
+      <p><a href="../blog.html">← 全部文章</a> · <a href="../index.html">主页</a></p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

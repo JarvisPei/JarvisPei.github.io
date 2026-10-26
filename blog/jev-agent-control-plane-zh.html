@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="从 NeoHorse-Jev 的实践出发，讨论决策模型在 Agent 循环中的位置：证据、定制化、共享状态、工作负载，以及把判断转化为行动的软件策略。" />
+  <meta name="author" content="Zehua Pei" />
+  <link rel="canonical" href="https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html" />
+  <link rel="alternate" hreflang="en" href="https://jarvispei.github.io/blog/jev-agent-control-plane.html" />
+  <link rel="alternate" hreflang="zh-CN" href="https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jarvispei.github.io/blog/jev-agent-control-plane.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Jev 在 Agent 循环中适合做什么" />
+  <meta property="og:description" content="快速语义判断、有用的软件策略，以及构建 NeoHorse-Jev 带给我的启发。" />
+  <meta property="og:url" content="https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html" />
+  <meta property="og:image" content="https://jarvispei.github.io/figures/blog/jev-control-plane-social.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Agent 循环中的决策模型：从可见状态，到软件策略，再到执行。" />
+  <meta property="article:published_time" content="2026-10-26" />
+  <meta property="article:modified_time" content="2026-10-26" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jev 在 Agent 循环中适合做什么" />
+  <meta name="twitter:description" content="快速语义判断、有用的软件策略，以及构建 NeoHorse-Jev 带给我的启发。" />
+  <meta name="twitter:image" content="https://jarvispei.github.io/figures/blog/jev-control-plane-social.png" />
+  <meta name="twitter:image:alt" content="Agent 控制平面中的决策模型。" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": "https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html#article",
+    "headline": "Jev 在 Agent 循环中适合做什么",
+    "description": "快速语义判断、有用的软件策略，以及构建 NeoHorse-Jev 带给我的启发。",
+    "url": "https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html",
+    "mainEntityOfPage": "https://jarvispei.github.io/blog/jev-agent-control-plane-zh.html",
+    "image": "https://jarvispei.github.io/figures/blog/jev-control-plane-social.png",
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26",
+    "inLanguage": "zh-CN",
+    "translationOfWork": {"@type": "BlogPosting", "@id": "https://jarvispei.github.io/blog/jev-agent-control-plane.html#article", "inLanguage": "en"},
+    "author": {"@type": "Person", "@id": "https://jarvispei.github.io/#person", "name": "Zehua Pei", "url": "https://jarvispei.github.io/"}
+  }
+  </script>
+  <link rel="stylesheet" href="../jemdoc.css" />
+  <link rel="stylesheet" href="../css/myMiddle.css" />
+  <link rel="stylesheet" href="../css/blog.css?v=20261026-bilingual" />
+  <link rel="shortcut icon" href="../cuhk_logo.png" />
+  <script src="../profile-links.js" defer></script>
+  <title>Jev 在 Agent 循环中适合做什么 — Zehua Pei</title>
+</head>
+<body class="blog-page">
+<a class="skip-link" href="#layout-content">跳到正文</a>
+<div class="blog-shell">
+  <nav id="layout-menu" aria-label="主导航">
+    <div class="menu-category">Zehua Pei</div>
+    <div class="page-links">
+      <div class="menu-item"><a href="../index.html">主页</a></div>
+      <div class="menu-item"><a href="../publications.html">论文</a></div>
+      <div class="menu-item"><a href="../software.html">软件与模型</a></div>
+      <div class="menu-item"><a href="../blog.html" class="current" aria-current="page">博客</a></div>
+    </div>
+    <div class="profile-menu">
+      <div class="menu-category">个人链接</div>
+      <div class="menu-item"><a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google&nbsp;Scholar</a></div>
+      <div class="menu-item"><a href="https://github.com/JarvisPei">GitHub</a></div>
+      <div class="menu-item"><a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></div>
+    </div>
+  </nav>
+  <main id="layout-content">
+    <header class="article-header">
+      <a class="back-link" href="../blog.html">← 全部文章</a>
+      <nav class="language-switch" aria-label="文章语言"><a href="jev-agent-control-plane.html" lang="en" hreflang="en">English</a><span aria-hidden="true"> / </span><a href="jev-agent-control-plane-zh.html" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a></nav>
+      <p class="post-meta">原文发表于 <time datetime="2026-10-02">2026 年 10 月 2 日</time> · 中文版：<time datetime="2026-10-26">2026 年 10 月 26 日</time></p>
+      <h1>Jev 在 Agent 循环中适合做什么</h1>
+      <p class="subtitle">快速语义判断、有用的软件策略，以及构建 NeoHorse-Jev 带给我的启发。</p>
+      <p class="post-meta">Zehua Pei · 与 NeoHorse Team 共同开展实验</p>
+    </header>
+    <article class="blog-article">
+      <p class="lead">Agent 工程里，相当多的工作发生在那些显而易见的步骤之间。我们知道如何调用模型、执行工具、保存结果。难的是判断：一段文字是否相关，一次报错是否值得再试，以及眼前的证据是否已经足够让任务继续。</p>
+      <p>其中一些问题适合交给普通代码：文件不存在，就是不存在。另一些问题依赖语义，很难写出可靠的规则。每次都调用大语言模型当然可行，但一个小小的判断，就可能把生成、解析和额外一次网络往返都放到关键路径上。</p>
+      <p>这正是 <a href="https://docs.typesafe.ai/introduction">Jev</a> 吸引我的原因。它的接口接收状态和带类型的问题，返回程序可以直接使用的答案及概率分布。在开发 <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B">NeoHorse-Jev-4B</a> 的过程中，我们探索了这个接口能为已有的 Agent 循环带来什么：表单操作、约束检查、故障恢复、上下文选择、语义筛选，以及对同一状态提出多个问题。</p>
+      <div class="thesis"><p>我目前的理解是：决策模型可以成为 <strong>Agent 控制平面中可编程的语义算子</strong>。它的价值取决于三件事：能看到什么证据，被要求完成什么工作，以及软件用什么策略把答案变成行动。</p></div>
+      <p>这里的<em>控制平面（control plane）</em>，指系统中决定接下来做什么的部分。生成模型负责写补丁或答案，工具负责作用于环境，控制平面则决定读什么、把精力花在哪里，以及什么时候再做一次检查。</p>
+      <details class="article-toc" open><summary>本文目录</summary><ol>
+        <li><a href="#interface">让判断成为可调用的操作</a></li><li><a href="#evidence">答案很短，也仍然需要充分的证据</a></li><li><a href="#customization">定制化让算子有明确的用武之地</a></li><li><a href="#workload">“快”是否有用，要看工作负载</a></li><li><a href="#allocation">用判断安排接下来的工作</a></li><li><a href="#monitoring">常驻观察者需要明确的状态约定</a></li><li><a href="#evaluation">评估干预，而不只是答案</a></li>
+      </ol></details>
+      <section aria-labelledby="interface">
+        <h2 id="interface">1. 让判断成为可调用的操作</h2>
+        <p>这个抽象很简单：描述可见状态，明确问题，列出备选答案。工具选择器可以问，哪个可用工具最适合当前请求；上下文管理器可以问，一段文字是否支持某项要求；监测组件可以问，当前证据是否值得进一步检查。</p>
+        <p>同一个接口可以支持二元判断、选项选择和有序评分。背后的实现却可以不同：<a href="https://github.com/jaredpalmer/kev">Kev</a> 在适配后的语言模型上采用指针式读出；<a href="https://github.com/bespokelabsai/nimble">Nimble</a> 则介绍了直接对答案 token 评分的方式。API 的形式与执行策略是两回事。提供决策接口，并不意味着运行时就会在多个问题之间共享上下文计算。</p>
+        <figure><div class="figure-scroll"><a href="../figures/blog/jev-control-plane.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的 Agent 控制平面示意图"><img src="../figures/blog/jev-control-plane.svg" width="960" height="420" alt="可见状态输入决策模型，模型答案输入软件策略；策略指挥生成模型与工具，观测结果再更新状态。" /></a></div><figcaption><span class="figure-help">可横向滑动查看，也可点击打开完整图片。</span><strong>循环之中的判断。</strong>模型估计语义关系，软件决定这个答案可以改变什么。</figcaption></figure>
+        <p>这种分离让组件更容易检查。“模型认为这段文字相关”和“程序应该删掉其他所有文字”，就成了两项不同的决定。前者是语义估计，后者是会产生实际后果的策略。</p>
+        <p>不确定性也因此有了落点。程序可以根据分布决定接受建议、请求更多证据，还是走回退路径。阈值应该由应用决定，并反映漏掉问题与无谓打断各自的代价。</p>
+        <p>Diogo Almeida 在 <a href="https://www.latent.space/p/jev">Latent Space 的访谈</a>帮助我进一步明确了这个视角：目标是在产品里放入大量供软件使用的小判断。相比让决策模型扮演整个 Agent，我觉得这个方向更有意思。</p>
+      </section>
+      <section aria-labelledby="evidence">
+        <h2 id="evidence">2. 答案很短，也仍然需要充分的证据</h2>
+        <p>我们最初的一个直觉是做进度监测。“Agent 有没有在取得进展？”听起来很简洁，实际却要求模型理解目标、此前的尝试、环境，以及再试一次是否值得。把答案压成一个布尔值，并不会让这个推断问题消失。</p>
+        <p>更好的起点是明确一种关系：<em>这段文字是否支持这项要求？</em>或者：<em>这个操作是否符合已经声明的范围？</em>这样的问题同时指明了证据和需要从证据中推断的内容。如果时间戳、哈希或精确的权限检查就能回答，我会直接用代码。</p>
+        <p>候选答案的构造也是证据问题的一部分。系统没有提供的答案，决策模型不可能选出来。在一个小型 SQuAD2 抽取诊断中，候选生成阶段只为 <strong>32 道可回答问题中的 12 道</strong>提供了精确的参考答案片段。在全部 40 个样例上，语言模型直接抽取达到了 32/40 的归一化精确匹配；先生成候选再做决策选择，只有 16/40，而且更慢。选择器处在主要瓶颈的下游。</p>
+        <p>这改变了我对“以上皆非”的理解。它能暴露候选集合的不足，但程序仍然需要扩大候选集合、检索更多证据，或者把任务交回生成模型。好的决策接口应该把这条恢复路径显式留出来。</p>
+        <p><em>错误</em>、<em>未提及</em>和<em>未知</em>之间也有类似的区别。在文档核查实验中，我们让决策模型对 61 份开发集合同逐一评估 ContractNLI 的全部 17 个假设。1,037 次判断里有 824 次正确，但<strong>只有一份合同的整张核查清单全部正确</strong>。423 个“未提及”标签中，有 130 个被错判成支持或矛盾。局部准确率，并不意味着整份文档就能被可靠地验收。</p>
+      </section>
+      <section aria-labelledby="customization">
+        <h2 id="customization">3. 定制化让算子有明确的用武之地</h2>
+        <p>面向特定任务的适配，是这轮探索中最明确的正向信号之一。表单操作专项模型能完成通用控制器经常失败的受控表单循环。这里的状态描述了表单及可用操作；这是基于结构化状态的动作选择，不是对任意截图式浏览器操作能力的宣称。</p>
+        <p>另一个约束专项模型，学会了更好地区分兼容操作、不兼容操作和信息不足。在来自四类留出场景的 12 个新案例上，我们改变措辞、名字和选项顺序，得到 432 个输入视图，准确数从 294/432 提高到 351/432。相当一部分提升来自识别出：现有信息还不足以支持一个答案。</p>
+        <div class="table-scroll"><table><caption>两项局部定制化实验</caption><thead><tr><th scope="col">指标</th><th scope="col" class="numeric">通用模型</th><th scope="col" class="numeric">专项模型</th></tr></thead><tbody>
+          <tr><th scope="row">表单循环完成数</th><td class="numeric">80/100</td><td class="numeric">100/100</td></tr>
+          <tr><th scope="row">约束判断正确数（相关视图）</th><td class="numeric">294/432</td><td class="numeric">351/432</td></tr>
+          <tr><th scope="row">所有视图均正确的约束案例数</th><td class="numeric">6/12</td><td class="numeric">7/12</td></tr>
+        </tbody></table></div>
+        <p class="note">表单专项和约束专项是不同的模型。表单测试共享人工设计的任务模板；约束视图是对 12 个案例的重复测量，不是 432 个独立任务。</p>
+        <p>吸引我的地方在于，应用可以掌握自己所用算子的具体含义。“选择下一步表单操作”或“检查是否符合这个范围”，在软件里都有明确的位置。这个角色稳定之后，专项模型不必成为更好的通用助手，也能创造价值。</p>
+        <p>但我们还观察到了另一项重要结果。经过约束适配后，在冻结并适配过的 Nimble、VitaminC 和 MASSIVE 子集上，平均准确率仅从 83.26% 变为 82.70%，但每个子集的负对数似然、Brier 分数和校准误差都变差了。大多数时候仍能选对答案，不等于保住了阈值策略所依赖的概率质量。</p>
+        <p>因此，我会明确专项模型的工作范围，并在这个范围内评估它的概率。范围之外，通用控制器或其他回退仍然可用。选择如何定制之前，也应该先诊断错配来自哪里：有些任务需要新的语义区分，有些需要更好的证据或不同的阈值。更新参数只是其中一种工具。</p>
+      </section>
+      <section aria-labelledby="workload">
+        <h2 id="workload">4. “快”是否有用，要看工作负载</h2>
+        <p>Prefill-only 执行省去了逐 token 解码答案的过程，但读取状态、处理问题和选项描述、分发请求以及管理缓存，仍然有成本。当多个判断确实需要同一份状态时，这个方向尤其值得关注。</p>
+        <figure><div class="figure-scroll"><a href="../figures/blog/jev-shared-state.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的共享状态示意图"><img src="../figures/blog/jev-shared-state.svg" width="960" height="400" alt="重复执行为每个问题单独读取状态；共享执行只读取一次状态，再分支处理各个问题。" /></a></div><figcaption><span class="figure-help">可横向滑动查看，也可点击打开完整图片。</span><strong>同一状态上，确实需要多个答案。</strong>每个 q 表示一个问题，p 表示它的答案分布。复用省去重复的状态计算；复制、分支和调度仍有成本。</figcaption></figure>
+        <p>我们测试了八段简短的公开文本，每段配有 16 个原创问题。在 16 个问题时，冷启动的共享状态执行把平均请求时间从 <strong>1,324 ms 降到了 711 ms</strong>。只有一个问题时，共享路径反而从 106 ms 增至 127 ms。复用本身有开销，所以真正需要多少次判断很重要。</p>
+        <p>再看工具选择。十个工具不一定意味着需要十个答案。生成模型可以读完列表，只输出一个标识符；逐候选评分器可能对每个工具都做一次判断，即使应用最终只需要选一个。</p>
+        <div class="table-scroll"><table><caption>局部诊断中的两类工作负载</caption><thead><tr><th scope="col">所需输出</th><th scope="col">实现</th><th scope="col" class="numeric">平均时间</th><th scope="col" class="numeric">正确数</th></tr></thead><tbody>
+          <tr><th scope="row" rowspan="3">每段文本 16 个答案</th><td>决策模型：重复处理状态</td><td class="numeric">1,324 ms</td><td class="numeric">98/128</td></tr>
+          <tr><td>决策模型：冷启动共享状态</td><td class="numeric">711 ms</td><td class="numeric">98/128</td></tr>
+          <tr><td>语言模型：一次返回完整列表</td><td class="numeric">1,229 ms</td><td class="numeric">113/128</td></tr>
+          <tr><th scope="row" rowspan="2">从 8–10 个工具中<br />选择一个</th><td>决策模型：候选评分</td><td class="numeric">1,302 ms</td><td class="numeric">15/16</td></tr>
+          <tr><td>语言模型：看完整集合后回答</td><td class="numeric">321 ms</td><td class="numeric">14/16</td></tr>
+        </tbody></table></div>
+        <p class="note">这些是参考运行时的诊断，不是生产速度基准。决策模型使用 FP32，生成模型使用 BF16；不计模型加载时间。共享执行保持了记录中的 argmax 答案，但概率漂移最高达到 0.00093329，没有通过数值等价性检查。</p>
+        <p>我从这些测量中得到的启发是：要数清楚应用真正需要的答案。密集核查清单、重复的记录编码，都可能适合状态复用。从多个候选中只选一个，则是另一类工作负载；工程实现良好的生成模型可能很有竞争力。</p>
+        <p>上下文压缩也要这样算账。选择器减少了后续阅读器的输入，却增加了自身推理、一次串行往返，以及之后读回内容的成本。在我们的可恢复上下文实验中，选择后阅读答对了 14/24 个问题，完整上下文阅读为 13/24，但耗时分别为 1,416 ms 和 270 ms。多答对一个问题，并没有带来效率提升。公开的 <a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev 验证记录</a>也把输入 token 减少与端到端耗时分开报告。</p>
+      </section>
+      <section aria-labelledby="allocation">
+        <h2 id="allocation">5. 用判断安排接下来的工作</h2>
+        <p>核查清单的结果提示了一个比“让模型证明文档已经完成”更值得探索的用途：决策向量可以告诉系统，下一步应该把精力花在哪里。</p>
+        <p>设想一个研究 Agent，需要用文档集合支持若干条主张。对每条主张，算子返回一个状态：已支持、有冲突，或缺少证据。程序保留支持材料，调查冲突，为缺口补充检索。这个向量就成了一份工作队列。</p>
+        <figure><div class="figure-scroll"><a href="../figures/blog/jev-work-allocation.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的工作分配示意图"><img src="../figures/blog/jev-work-allocation.svg" width="960" height="390" alt="证据状态决定保留来源、解决冲突或补充检索；新证据进入下一轮判断，完成验收另设检查。" /></a></div><figcaption><span class="figure-help">可横向滑动查看，也可点击打开完整图片。</span><strong>一种设计方向：安排可恢复的后续工作。</strong>状态判断引导下一步行动；工作是否完成，仍需独立验收。</figcaption></figure>
+        <p>这里的错误后果有所不同。一次多余的“缺少证据”可能只带来额外检索；一次错误的“已支持”，却可能过早结束调查。程序可以为追加搜索设置预算，并为重要主张保留独立的验收检查。</p>
+        <p>因此，一个可行的接入顺序是：先以影子模式观察决策、比较分歧，再允许算子建议或指挥一个有边界的动作。<a href="https://github.com/qybaihe/mu">mu harness</a>明确提供了 active、shadow 和 disabled 模式。这有助于在赋予控制器更大权限之前，先弄清它究竟改变了什么。</p>
+        <p>可恢复性不只对检索重要。上下文管理器可以暂时从下一次提示中隐藏证据，但保留读回路径；工具分流组件可以在执行前要求检查参数；恢复组件可以建议下一步诊断，而不是直接宣布根因已解决。</p>
+        <p>语义建议与强制执行也应分开。在我们的可执行约束实验中，模型有时已经认出了被禁止的操作，生成模型却仍然执行了它。可由机器检查的权限和限制，需要在代码里落实。语义算子处理规则之外的判断，而不是授予权限。</p>
+      </section>
+      <section aria-labelledby="monitoring">
+        <h2 id="monitoring">6. 常驻观察者需要明确的状态约定</h2>
+        <p>一个常驻、低延迟的判断组件，仍然很吸引我。它可以关注工作区、工具结果或证据集合的变化，帮助决定什么时候值得再检查一次。</p>
+        <p>低成本的重复推理让这件事变得可行，但是否有用取决于观察策略。什么事件触发新判断？保留哪些历史？答案有效多久？对每次变化都响应，可能制造多余复核，甚至来回摇摆。</p>
+        <figure><div class="figure-scroll"><a href="../figures/blog/jev-state-validity.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整的状态有效期时间线"><img src="../figures/blog/jev-state-validity.svg" width="960" height="350" alt="版本一的测试通过记录，在编辑到版本二后失效；版本二的新测试提供行动前的当前证据。" /></a></div><figcaption><span class="figure-help">可横向滑动查看，也可点击打开完整图片。</span><strong>判断也有状态版本。</strong>对旧快照正确的答案，不一定还能用于当下的行动。</figcaption></figure>
+        <p>测试通过就是一个简单例子。判断可以正确地报告产物 v1 已通过测试；一旦产物变成 v2，这个旧判断就不应再授权后续行动。版本绑定和失效管理属于精确记账，应该由应用直接处理。</p>
+        <p>接入时，可以把模型答案与它检查过的状态版本绑定。下面的示意代码展示了分工，不对应某一家服务商的 API：</p>
+        <pre><code>snapshot = capture_state()
+scores = judge(snapshot, questions)
+
+if current_version() != snapshot.version:
+    schedule_recheck()
+elif scores["needs_more_evidence"] &gt; review_threshold:
+    queue_evidence_search()
+else:
+    continue_agent()
+
+# 完成验收与权限使用独立的应用层检查。</code></pre>
+        <p>因此，监测组件除了分数，还应记录三件事：判断了什么、何时判断，以及这个结果被允许改变什么。我会先用这样的组件，在有信息价值的事件发生后安排检查。像“这个 Agent 卡住了”这样宽泛的结论，则需要对整个过程有更强的理解。</p>
+      </section>
+      <section aria-labelledby="evaluation">
+        <h2 id="evaluation">7. 评估干预，而不只是答案</h2>
+        <p>最有用的评估单位，是工作流中的一次决策机会。如果没有这次判断，会发生什么？它省去了或增加了哪些工作？错误有什么代价？下游任务最后完成了吗？</p>
+        <p>据此，在加入新的控制器之前，我会做几项检查：</p>
+        <ol>
+          <li><strong>找到杠杆点。</strong>用正确决策作为 oracle 做诊断。如果完美判断也无法改善工作流，那么模型准确率就不是眼前的瓶颈。</li>
+          <li><strong>使用有竞争力的基线。</strong>与规则、可用的 embedding 方法，以及生成同样所需输出的语言模型比较。不应仅仅因为普通 Markdown 代码围栏，就人为制造决策模型的优势。</li>
+          <li><strong>检查消费答案的策略。</strong>在程序实际使用的覆盖率下，同时测量错误接受和无谓拒绝。归一化分布不等于已经校准；<a href="https://docs.typesafe.ai/confidence">TypeSafe 的置信度文档</a>也区分了其置信度统计量与答案概率。</li>
+          <li><strong>计算整个干预的成本。</strong>包括候选构造、判断延迟、回退、读回，以及后续调用，同时保住最终完成工作的质量。</li>
+        </ol>
+        <p>社区正在出现一些值得关注的落点。<a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a>把决策控制器用于记忆组织和检索；一项<a href="https://arxiv.org/abs/2609.24052">事故叙述编码研究</a>用包含 27 个问题的体系处理 195,857 条记录，并以人工判断审核答案。这些工作负载很具体：有明确的问题、重复的状态结构，以及可观测的后果。它们报告的是各自完整系统的结果，而不是“加入 Jev 就普遍有收益”。</p>
+        <p>我的兴趣逐渐从寻找一个惊艳的决策接口，转向寻找<em>应用自己掌握的语义算子</em>：应用确实高频需要，值得专项化、检查，并接入稳定策略的操作。目前最清晰的机会，似乎是共享证据上的密集判断、有明确范围的定制化，以及引导可恢复调查的决策。</p>
+        <div class="thesis"><p>我现在会问：<strong>工作流中的哪一部分，会因为语义判断被显式抽出来，而成为更好的软件？</strong>这会是我用 Jev 开始构建的地方。</p></div>
+      </section>
+      <section aria-labelledby="notes">
+        <h2 id="notes">来源与实验说明</h2>
+        <p class="note">上述本地结果汇总自我们此前的 NeoHorse-Jev 探索；没有为这篇文章额外开展训练或模型评测。实验包括公开开发集选样和小型构造任务；相关措辞变体及重复启动并非独立样例。计时对应记录中的参考实现。工作分配与常驻观察者模式，是由这些观察引出的设计方向。</p>
+        <p class="note">已发布模型为 <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B">NeoHorse-Jev-4B</a>，另有 <a href="https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B-GGUF">GGUF 权重与支持决策读出的运行时</a>。实验性的共享状态路径，与归档的串行 GGUF 运行时不同。自定义决策读出需要运行时支持；普通聊天接口是另一种接口。</p>
+        <ul class="note">
+          <li>接口与定位：<a href="https://docs.typesafe.ai/introduction">TypeSafe 文档</a>、<a href="https://www.latent.space/p/jev">Diogo Almeida 的 Latent Space 访谈</a>。</li>
+          <li>开源实现：<a href="https://github.com/jaredpalmer/kev">Kev</a>、<a href="https://github.com/bespokelabsai/nimble">Nimble</a>。</li>
+          <li>Harness 接入：<a href="https://github.com/qybaihe/mu">mu</a>、<a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev 验证记录</a>。</li>
+          <li>工作负载研究：<a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a>、<a href="https://arxiv.org/abs/2609.24052">Calibrated Decisions at Scale</a>。</li>
+          <li>本地证据实验的数据集定义：<a href="https://aclanthology.org/P18-2124/">SQuAD2</a>、<a href="https://aclanthology.org/2021.findings-emnlp.164/">ContractNLI</a>。</li>
+        </ul>
+      </section>
+    </article>
+    <footer class="blog-footer"><p>后续文章：<a href="jev-fast-decisions-useful-agents-zh.html">快速决策，怎样让 Agent 更有用</a></p><p><a href="../blog.html">← 全部文章</a> · <a href="../index.html">主页</a></p></footer>
+  </main>
+</div>
+</body>
+</html>
