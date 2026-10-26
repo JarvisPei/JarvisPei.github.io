@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Fast Decisions, Useful Agents</title>
+  <desc id="desc">Lessons from putting NeoHorse-Jev inside the loop. A decision flows through application policy to delivered work.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#20252b" /></marker>
+  </defs>
+  <rect width="1200" height="630" fill="#f8fafc" />
+  <rect x="0" y="0" width="13" height="630" fill="#527bbd" />
+  <g font-family="Arial, Helvetica, sans-serif" fill="#20252b">
+    <text x="82" y="77" font-size="20" font-weight="700" letter-spacing="3" fill="#45505c">JEV FIELD NOTES · 02</text>
+    <text x="78" y="183" font-size="76" font-weight="700" letter-spacing="-2">Fast Decisions,</text>
+    <text x="78" y="270" font-size="76" font-weight="700" letter-spacing="-2">Useful Agents</text>
+    <text x="82" y="327" font-size="26" fill="#45505c">Lessons from putting NeoHorse-Jev inside the loop</text>
+    <g stroke="#20252b" stroke-width="2.2">
+      <rect x="82" y="388" width="254" height="83" rx="9" fill="#fff0e4" />
+      <rect x="434" y="388" width="280" height="83" rx="9" fill="#eaf0f9" />
+      <rect x="812" y="388" width="306" height="83" rx="9" fill="#ffffff" />
+      <path d="M351 429H418" fill="none" marker-end="url(#arrow)" />
+      <path d="M729 429H796" fill="none" marker-end="url(#arrow)" />
+    </g>
+    <g text-anchor="middle" font-size="25" font-weight="700">
+      <text x="209" y="438">Decision</text>
+      <text x="574" y="438">Application policy</text>
+      <text x="965" y="438">Delivered work</text>
+    </g>
+    <path d="M82 520H1118" stroke="#d8dce2" stroke-width="1.5" />
+    <text x="82" y="568" font-size="22">Zehua Pei</text>
+    <text x="1118" y="568" text-anchor="end" font-size="21" fill="#45505c">jarvispei.github.io</text>
+  </g>
+</svg>

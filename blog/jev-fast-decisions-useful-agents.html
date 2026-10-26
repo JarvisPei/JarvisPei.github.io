@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Zehua Pei" />
+  <meta name="description" content="Lessons from putting NeoHorse-Jev inside agent workflows: completion, question contracts, speed–quality tradeoffs, customization, and the work after a decision." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Fast Decisions, Useful Agents" />
+  <meta property="og:description" content="Lessons from putting NeoHorse-Jev inside agent workflows: completion, question contracts, speed–quality tradeoffs, customization, and the work after a decision." />
+  <meta property="og:url" content="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html" />
+  <meta property="og:image" content="https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Fast Decisions, Useful Agents. A decision flows through application policy to delivered work." />
+  <meta property="article:published_time" content="2026-10-26" />
+  <meta property="article:modified_time" content="2026-10-26" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fast Decisions, Useful Agents" />
+  <meta name="twitter:description" content="Lessons from putting NeoHorse-Jev inside agent workflows: completion, question contracts, speed–quality tradeoffs, customization, and the work after a decision." />
+  <meta name="twitter:image" content="https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png" />
+  <meta name="twitter:image:alt" content="Fast Decisions, Useful Agents — lessons from putting NeoHorse-Jev inside the loop." />
+  <link rel="canonical" href="https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html#article",
+  "headline": "Fast Decisions, Useful Agents",
+  "description": "Lessons from putting NeoHorse-Jev inside agent workflows: completion, question contracts, speed–quality tradeoffs, customization, and the work after a decision.",
+  "url": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html",
+  "mainEntityOfPage": "https://jarvispei.github.io/blog/jev-fast-decisions-useful-agents.html",
+  "image": "https://jarvispei.github.io/figures/blog/jev-fast-decisions-social.png",
+  "datePublished": "2026-10-26",
+  "dateModified": "2026-10-26",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "@id": "https://jarvispei.github.io/#person",
+    "name": "Zehua Pei",
+    "url": "https://jarvispei.github.io/"
+  }
+}
+  </script>
+  <link rel="stylesheet" href="../jemdoc.css" />
+  <link rel="stylesheet" href="../css/myMiddle.css" />
+  <link rel="stylesheet" href="../css/blog.css?v=20261026" />
+  <link rel="shortcut icon" href="../cuhk_logo.png" />
+  <script src="../profile-links.js" defer></script>
+  <title>Fast Decisions, Useful Agents — Zehua Pei</title>
+</head>
+<body class="blog-page">
+<a class="skip-link" href="#layout-content">Skip to content</a>
+<div class="blog-shell">
+  <nav id="layout-menu" aria-label="Main navigation">
+    <div class="menu-category">Zehua Pei</div>
+    <div class="page-links">
+      <div class="menu-item"><a href="../index.html">Home</a></div>
+      <div class="menu-item"><a href="../publications.html">Publications</a></div>
+      <div class="menu-item"><a href="../software.html">Software</a></div>
+      <div class="menu-item"><a href="../blog.html" class="current" aria-current="page">Blog</a></div>
+    </div>
+    <div class="profile-menu">
+      <div class="menu-category">Profiles</div>
+      <div class="menu-item"><a href="https://scholar.google.com/citations?user=FjZurHkAAAAJ">Google&nbsp;Scholar</a></div>
+      <div class="menu-item"><a href="https://github.com/JarvisPei">GitHub</a></div>
+      <div class="menu-item"><a href="https://www.linkedin.com/in/zehua-pei-4798a21a7/">LinkedIn</a></div>
+    </div>
+  </nav>
+  <main id="layout-content">
+    <header class="article-header">
+      <a class="back-link" href="../blog.html">← All posts</a>
+      <p class="post-meta"><time datetime="2026-10-26">October 26, 2026</time> · Jev field notes, part 2</p>
+      <h1>Fast Decisions, Useful Agents</h1>
+      <p class="subtitle">Lessons from putting NeoHorse-Jev inside the loop.</p>
+      <p class="post-meta">Zehua Pei · Experiments with the NeoHorse Team</p>
+    </header>
+    <article class="blog-article">
+      <p class="lead">In my earlier essay, <a href="jev-agent-control-plane.html">Where Jev Fits in an Agent Loop</a>, I described decision models as programmable semantic operators: small components that answer questions software cannot easily settle with rules. Is this passage relevant? Which worker should handle this request? Does the current evidence justify moving on?</p>
+      <p>The interface takes an observed state and a set of typed questions, then returns choices or scores that code can consume. The attraction is to make a semantic judgment callable without asking a generator to write and explain another answer.</p>
+      <p>That remains an appealing interface. While building NeoHorse-Jev, we found that a model could return a typed decision quickly, and that specialization could improve a narrow skill. The next question was whether those properties would make an agent more useful.</p>
+      <p>So we moved from isolated judgments to interventions: let a decision stop a tool loop, skip a verification call, or produce a set of topic assignments. A useful decision component has to improve the work around it. Its own response time is only one part of that story.</p>
+      <p>The distinction became clearest when an agent finished faster by leaving something unfinished.</p>
+      <details class="article-toc" open><summary>In this essay</summary><ol><li><a href="#completion">Completion is a consequence, not just a label</a></li><li><a href="#question-contract">A probability needs a question with a complete meaning</a></li><li><a href="#saved-work">Count the work after the decision</a></li><li><a href="#speed-quality">There is a real speed–quality tradeoff</a></li><li><a href="#specialization">Specialization needs an operating scope</a></li><li><a href="#community">Where the community evidence points</a></li><li><a href="#takeaways">What I would ask before adding another decision model</a></li></ol></details>
+      <section aria-labelledby="completion"><h2 id="completion">1. Completion is a consequence, not just a label</h2>
+      <p>Consider a request involving several files: preserve one, move another, remove an obsolete directory, and make sure the retained contents match. “Is everything done?” looks compact at the API boundary. Answering it requires accounting for every obligation.</p>
+      <p>Breaking the request into a checklist helped. But it helped the ordinary main-model baseline too. Some of what initially looked like a benefit from adding a decision model was a benefit from making the task and evidence explicit.</p>
+      <p>We then held the facts about one obligation fixed while changing progress on the others. Some local judgments changed with that unrelated progress. A narrower evidence view corrected several observed errors. Yet in a later executable counterexample, the model confidently judged different file contents to match. That answer allowed the controller to end the task. An exact program check rejected it.</p>
+      <p>Checking exact contents, permissions, or whether a command actually ran belongs in code. A model can help interpret “relevant” or “sufficient,” but should not replace an available exact check merely because both can be phrased as yes-or-no questions.</p>
+      <p>Recognizing a condition and enforcing it are different jobs, too. A model may identify a forbidden operation while the acting agent still performs it. The host must enforce permissions and limits.</p>
+      <p>The decision API makes a judgment explicit. The surrounding program still decides what it can authorize.</p>
+      </section>
+      <section aria-labelledby="question-contract"><h2 id="question-contract">2. A probability needs a question with a complete meaning</h2>
+      <p>A decision interface encourages short questions. That can hide a surprisingly large amount of specification.</p>
+      <p>In a multi-label message experiment, we asked whether messages belonged to categories such as aid, infrastructure, and weather. Each also had an “other” category. “Other aid” only makes sense relative to the named aid categories. If those definitions live elsewhere, an independently evaluated question may not contain enough information to establish the distinction.</p>
+      <p>Our specification had exactly this problem: some residual-category questions referred to other categories without listing them. The ordinary LLM received the full taxonomy, while the decision questions were not self-contained. This was an input-contract problem, and a reason not to attribute the entire quality difference to model capacity.</p>
+      <p>Making the definitions longer was not a general fix. In a small development comparison, explicitly listing the categories corrected several intended distinctions but introduced more unrelated positives. More complete instructions and better predictions did not move together.</p>
+      <p>The application must supply the information needed to interpret each question. The model must still use that information correctly. Adding prose addresses the first responsibility; it does not automatically satisfy the second.</p>
+      <p>The same distinction matters for confidence. In a source-checking task, the model approved a claim that restoring a biological mechanism impaired regeneration, although the abstract said restoration improved it. The support score was about 0.96. Later held-out source checks produced another clear high-confidence direction error. Selecting a threshold on separate calibration data changed shortcut coverage without removing that semantic mistake.</p>
+      <p>The practical question is therefore not simply whether the score is high. It is what error rate the policy produces on this kind of decision, and what happens when it is wrong.</p>
+      </section>
+      <section aria-labelledby="saved-work"><h2 id="saved-work">3. Count the work after the decision</h2>
+      <p>We tested a cascade: a decision model could directly accept sufficiently high-scoring source support; otherwise, the request went to the main LLM.</p>
+      <p>This arrangement can save work. In three short repeated runs on the same 48 claim–source pairs, it reduced main-model calls from 48 to 33 per run. Pooled mean latency fell by about 18%. But total network requests rose from 48 to 81 per run, the 95th-percentile latency was worse in every run, and one round had more unresolved fallback timeouts.</p>
+      <p>Every request pays for the decision call. Only the shortcut subset avoids the main-model call. The rest pay for both. A favorable average does not mean the slower requests improve, and fewer main-model calls do not establish a lower total bill.</p>
+      <p>We also connected the cascade to an actual retrieval loop: search a corpus, inspect abstracts, refine the search, and submit a verdict with a source. It made fewer main-model calls and had a lower observed mean runtime. It also introduced a clear semantic error that the ordinary agent avoided. Our initial aggregate score obscured the difference because some other failures concerned explanation length. Separating substantive correctness from that formatting requirement exposed the tradeoff.</p>
+      <p>The useful unit is a completed outcome. That requires accounting for judgment, fallback, extra searches, retries, and repair. It also requires distinguishing a wrong answer from a request that never returns an answer.</p>
+      <p>This is not a demand for zero mistakes. A recoverable extra search and an incorrect final approval have different costs. Whether the component helps depends on which mistakes it introduces and what work it removes.</p>
+      </section>
+      <section aria-labelledby="speed-quality"><h2 id="speed-quality">4. There is a real speed–quality tradeoff</h2>
+      <p>We next tried a workload that naturally needs several judgments: topic assignment on historical messages in the public <a href="https://github.com/rmunro/disaster_response_messages">Disaster Response Messages dataset</a>. The categories came from an existing message-coding task; we did not multiply questions to make batching look useful.</p>
+      <p>The ordinary LLM returned one compact list of positive labels. Our NeoHorse-Jev-4B service answered 35 typed questions in three sequential requests, because the deployed interface allowed at most 16 questions per call. All three requests counted toward latency.</p>
+      <p>On a fresh 96-message confirmation batch, we observed:</p>
+      <div class="table-scroll"><table class="service-comparison"><caption>Observed service tradeoff on 96 new messages</caption><thead><tr><th scope="col">Measure</th><th scope="col" class="numeric">Ordinary LLM</th><th scope="col" class="numeric">NeoHorse-Jev-4B</th></tr></thead><tbody><tr><th scope="row">Mean time per message</th><td class="numeric">1.80 s</td><td class="numeric">0.48 s</td></tr><tr><th scope="row">Binary-topic micro F1</th><td class="numeric">60.49%</td><td class="numeric">48.65%</td></tr><tr><th scope="row">Extra positive topic assignments</th><td class="numeric">128</td><td class="numeric">237</td></tr><tr><th scope="row">Missed positive topic assignments</th><td class="numeric">64</td><td class="numeric">67</td></tr></tbody></table></div>
+      <p>These compare two hosted services: a provider-declared Haiku 4.5 endpoint and our 4B decision model. They do not isolate architecture or hardware. The input-definition issue above and limitations of the historical annotations remain relevant. This was offline label evaluation, not real emergency dispatch or reviewer productivity.</p>
+      <p>The faster service produced substantially more extra labels at similar recall. If each label creates a queue entry, additional review can matter more than a second saved at inference. If labels are only inexpensive suggestions, the balance may differ. That is a workload decision, not something F1 or latency settles alone.</p>
+      <p>One improvement came from ordinary software. We required each of three residual labels to have its corresponding predicted parent: “other weather,” for example, required “weather-related.” We fixed the rule before the new batch and applied it to both models&#x27; unchanged outputs.</p>
+      <p>For Jev, extra assignments fell from 237 to 216 and micro F1 rose from 48.65% to 50.44%. Missed assignments stayed at 67. The same rule removed four extra labels from the ordinary LLM. It added no model calls.</p>
+      <p>This modest improvement repeated on new messages. It did not repair model understanding or close the quality gap; a wrong parent prediction could still suppress a valid label. Its value was to make an application constraint explicit rather than ask the model to infer it every time.</p>
+      </section>
+      <section aria-labelledby="specialization"><h2 id="specialization">5. Specialization needs an operating scope</h2>
+      <p>Our earlier controlled experiments showed that adapting a model to a form-action task could improve completion, and that specialization could improve judgments on a narrow family of constraints. These remain reasons to be interested in customization.</p>
+      <p>They also showed why a specialist needs a defined scope. After one constraint adaptation, accuracy on our general decision subsets changed relatively little, while probability-quality measures worsened. A policy relying on scores can change even when most top-choice answers stay the same.</p>
+      <p>I would distinguish three mismatches. Evidence may be missing. The question or acceptance criterion may be wrong. Or the model may lack the semantic skill the application needs. Training can address the third, but cannot supply evidence the runtime never observes or enforce a permission rule the software ignores.</p>
+      <p>Customization becomes most useful once a recurring decision has a stable meaning, feedback, and a clear place in the application. A specialist need not become a better general assistant. It does need to improve the task it is assigned.</p>
+      </section>
+      <section aria-labelledby="community"><h2 id="community">6. Where the community evidence points</h2>
+      <p>Some recent reports get closer to the system-level question than a fast classification demo.</p>
+      <p>The <a href="https://github.com/MongLong0214/jev-gate/tree/main/bench/results/long-session-pilot-2026-10-12">Jev Gate long-session pilot</a> rebuilt two real features from a private codebase in paired 17-turn coding sessions. The author reported total cost falling from about $42.81 to $19.65, with the same combined quality score of 21/23. The tasks traded a small quality advantage in opposite directions. The plugin combined worker delegation, model selection, and context compaction, and each task had only one pair of runs. It is a positive lead for changing how long sessions allocate work, not a measurement of the decision model&#x27;s isolated contribution.</p>
+      <p>Other reports show why the alternative matters. In <a href="https://llmgateway.io/blog/smart-routing-benchmark">LLM Gateway&#x27;s routing pilot</a>, routing was cheaper than a fixed premium model, but a fixed mid-priced model was cheaper still and passed slightly more tasks. <a href="https://github.com/madeye/pi-jev/blob/main/VALIDATION.md">pi-jev&#x27;s validation record</a> showed substantial context reduction, while local retrieval outperformed hosted Jev-assisted retrieval on one small paired fixture study. Better allocation and retrieval can help without requiring a decision model at every branch.</p>
+      <p>A broader <a href="https://arxiv.org/abs/2610.13092">study of Jev in agent workflows</a> reached a related finding across embodied and mobile tasks: decision-level savings did not transfer uniformly to successful delivery. Recovery and premature completion affected the result. These are other researchers&#x27; systems and models, not measurements of NeoHorse-Jev, but they reinforce the need to follow a decision through to its consequences.</p>
+      <p>The common theme worth pursuing is repeated, bounded work with an observable outcome. A component earns its place when it improves that outcome relative to a reasonable alternative: a rule, a fixed model, local retrieval, or a different division of work.</p>
+      </section>
+      <section aria-labelledby="takeaways"><h2 id="takeaways">What I would ask before adding another decision model</h2>
+      <p>I still like the idea of a resident semantic component. Making judgments callable exposes questions otherwise buried inside a long model response. It creates a place to specialize, inspect errors, and change policy independently of generation.</p>
+      <p>I would now begin with the application rather than the endpoint:</p>
+      <ul><li>What recurring decision does the workflow already need?</li><li>Does the component see enough information to answer it?</li><li>What changes after its answer, and what does a mistake cost?</li><li>Does the complete workflow improve against its simplest credible alternative?</li></ul>
+      <p>“Advisory only” is not an automatic answer to the third question. We tried ranking real code-repair trajectories for review and did not find a useful failure-prioritization signal. A suggestion still needs to help someone decide where to spend attention.</p>
+      <p>We have paused this round rather than keep searching for a favorable small result. The experiments leave implementation lessons and bounded positive signals, but not a workflow we can yet recommend as a stable win for our deployed model.</p>
+      <div class="thesis"><p>My original view of decision models as semantic operators survives. The additional requirement is that the operator must earn its place in the program. A fast answer is useful when it helps the system deliver better work, spend less effort, or recover sooner—not merely when it returns before the generator does.</p></div>
+      </section>
+      <section aria-labelledby="sources"><h2 id="sources">Sources and experiment scope</h2>
+      <p class="note">The local observations come from our NeoHorse-Jev exploration and deployed-service revalidation. They include constructed diagnostics, selected public records, repeated service runs, and small executable loops; they are not official full-benchmark scores or production traffic. Source-checking tasks use <a href="https://github.com/allenai/scifact">SciFact</a>; review ranking uses archived <a href="https://github.com/SWE-bench/experiments">SWE-bench experiments</a>. Disaster-message data attribution: Robert Munro, <a href="https://purl.stanford.edu/cg721hb0673">Processing short message communications in low-resource languages</a>, Stanford University, 2012, distributed under CC BY 4.0.</p>
+      <p class="note">Community results are attributed to their authors at the point of use. Our own results concern NeoHorse-Jev and the services tested, not TypeSafe&#x27;s proprietary model or every implementation of the interface.</p>
+      </section>
+    </article>
+    <footer class="blog-footer">
+      <p>Earlier essay: <a href="jev-agent-control-plane.html">Where Jev Fits in an Agent Loop</a></p>
+      <p><a href="https://twitter.com/intent/tweet?text=Fast%20Decisions%2C%20Useful%20Agents%20%E2%80%94%20lessons%20from%20putting%20NeoHorse-Jev%20inside%20the%20loop.&amp;url=https%3A%2F%2Fjarvispei.github.io%2Fblog%2Fjev-fast-decisions-useful-agents.html" target="_blank" rel="noopener noreferrer">Share on X</a> · <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjarvispei.github.io%2Fblog%2Fjev-fast-decisions-useful-agents.html" target="_blank" rel="noopener noreferrer">Share on LinkedIn</a></p>
+      <p><a href="../blog.html">← All posts</a> · <a href="../index.html">Homepage</a></p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

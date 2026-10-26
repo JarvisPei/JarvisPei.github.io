@@ -269,6 +269,14 @@
   font-variant-numeric: tabular-nums;
 }
 
+.blog-article table.service-comparison {
+  min-width: 0;
+}
+
+.service-comparison thead .numeric {
+  white-space: normal;
+}
+
 .blog-article .note {
   color: #4a535e;
   font-size: 0.91rem;
